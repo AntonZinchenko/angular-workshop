@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng lint && ng serve -o",
+    "backend": "json-server db\\db.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

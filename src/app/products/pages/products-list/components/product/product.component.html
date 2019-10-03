@@ -1,0 +1,31 @@
+<div class="col-sm-3">
+    <article class="col-item">
+        <div class="photo">
+            <a (click)="showDetails()">
+                <img src="{{product.url}}" class="img-responsive" alt="Product Image" />
+            </a>
+        </div>
+        <div class="info">
+            <div class="row">
+                <div class="price-details col-md-6">
+                    <p class="details">
+                        {{product.desc | slice:0:100}}..
+                    </p>
+                    <h1>{{product.title}}</h1>
+                    <span class="price-new">${{product.price}}</span>
+                </div>
+            </div>
+            <div class="separator clear-left">
+                <p class="btn-add">
+                    <a href="javascript:void(0)" (click)="onBuy()" class="hidden-sm">
+                        <i class="fa fa-shopping-cart"></i>Add to cart</a>
+                </p>
+                <p class="btn-details">
+                    <a href="javascript:void(0)" (click)="showDetails()" class="hidden-sm"><i
+                            class="fa fa-search"></i>Details</a>
+                </p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </article>
+</div>
