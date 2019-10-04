@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from 'src/app/core/models/product';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 const PRODUCTS_URL = `http://localhost:3000/products`;
 
@@ -10,39 +12,38 @@ export class ProductsService {
   constructor(private http: HttpClient) {
   }
 
-  getProducts(): Promise<Product[]> {
+  getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(PRODUCTS_URL)
-      .toPromise()
-      .catch(this.handleError);
+      .pipe(catchError(this.handleError<Product[]>('getProducts', [])));
   }
 
-  getProduct(id: number): Promise<Product> {
+  getProduct(id: number): Observable<Product> {
     return this.http.get<Product>(`${PRODUCTS_URL}/${id}`)
-      .toPromise()
-      .catch(this.handleError);
+    .pipe(catchError(this.handleError<Product>('getProduct', null)));
   }
 
-  createProduct(product: Product): Promise<Product> {
+  createProduct(product: Product): Observable<Product> {
     const body = JSON.stringify(product);
     return this.http.post<Product>(PRODUCTS_URL, body)
-      .toPromise()
-      .catch(this.handleError);
+    .pipe(catchError(this.handleError<Product>('createProduct', null)));
   }
 
-  updateProduct(product: Product): Promise<Product> {
+  updateProduct(product: Product): Observable<Product> {
     return this.http.put<Product>(`${PRODUCTS_URL}/${product.id}`, JSON.stringify(product))
-      .toPromise()
-      .catch(this.handleError);
+    .pipe(catchError(this.handleError<Product>('updateProduct', null)));
   }
 
-  deleteProduct(product: Product): Promise<Product> {
+  deleteProduct(product: Product): Observable<Product> {
     return this.http.delete<Product>(`${PRODUCTS_URL}/${product.id}`)
-      .toPromise()
-      .catch(this.handleError);
+    .pipe(catchError(this.handleError<Product>('deleteProduct', null)));
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
+
+      return of(result as T);
+    };
   }
 }
