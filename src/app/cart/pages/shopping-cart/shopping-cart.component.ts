@@ -6,42 +6,31 @@ import { ShippingInfo } from 'src/app/core/models/shipping-info';
 
 @Component({
   selector: 'app-shopping-cart',
-  templateUrl: './shopping-cart.component.html',
-  styleUrls: ['./shopping-cart.component.css']
+  templateUrl: './shopping-cart.component.html'
 })
 export class ShoppingCartComponent implements OnInit {
 
   selectedProducts: Product[];
-  shippingInfo: ShippingInfo;
+  shippingInfo: ShippingInfo = new ShippingInfo();
 
   constructor(private shoppingCartService: ShoppingCartService, private router: Router) {
-    this.shippingInfo = new ShippingInfo();
   }
 
   ngOnInit() {
     this.refreshCartData();
   }
 
-  removeProduct(product: Product): void {
+  onOrder(address: ShippingInfo) {
+    console.log('create order');
+  }
+
+  onDeleteProduct(product: Product): void {
     this.shoppingCartService.removeProduct(product);
     this.refreshCartData();
   }
 
   showProducts() {
     this.router.navigate(['products']);
-  }
-
-  createOrder(model: ShippingInfo, isValid: boolean) {
-    console.log('create order');
-  }
-
-  get totalPrice() {
-    let totalPrice = 0;
-    if (this.selectedProducts) {
-      this.selectedProducts.forEach(i => totalPrice += i.price);
-    }
-
-    return totalPrice;
   }
 
   private refreshCartData() {
