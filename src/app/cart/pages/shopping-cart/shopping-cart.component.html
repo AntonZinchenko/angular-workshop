@@ -9,7 +9,7 @@
                                 <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
                             </div>
                             <div class="col-xs-3">
-                                <button (click)="showProducts()" type="button" class="btn btn-primary btn-sm btn-block">
+                                <button (click)="onShowProducts()" type="button" class="btn btn-primary btn-sm btn-block">
                                     <span class="glyphicon glyphicon-share-alt"></span> Continue shopping
                                 </button>
                             </div>
@@ -17,9 +17,9 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <h3 *ngIf="!selectedProducts.length">No items</h3>
-                    <div *ngIf="selectedProducts.length" class="cart-content">
-                        <app-user-selection [products]="selectedProducts" (delete)="onDeleteProduct($event)">
+                    <h3 *ngIf="!(selectedProducts$ | async)?.length">No items</h3>
+                    <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length > 0">
+                        <app-user-selection [products]="selectedProducts$ | async" (delete)="onDeleteProduct($event)">
                         </app-user-selection>
                         <hr>
                         <app-address-form [address]="shippingInfo" (order)="onOrder($event)"></app-address-form>

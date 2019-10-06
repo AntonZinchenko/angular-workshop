@@ -1,49 +1,71 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from 'src/app/core/models/product';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
-const PRODUCTS_URL = `http://localhost:3000/products`;
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable()
 export class ProductsService {
+
+  private productsUrl = environment.productsUrl;
 
   constructor(private http: HttpClient) {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(PRODUCTS_URL)
-      .pipe(catchError(this.handleError<Product[]>('getProducts', [])));
+    return this.http.get<Product[]>(this.productsUrl)
+      .pipe(
+        tap(products => console.log(`fetched ${products.length} products`)),
+        catchError(this.handleError('getProducts', []))
+      );
   }
 
   getProduct(id: number): Observable<Product> {
-    return this.http.get<Product>(`${PRODUCTS_URL}/${id}`)
-    .pipe(catchError(this.handleError<Product>('getProduct', null)));
+    const url = `${this.productsUrl}/${id}`;
+    return this.http.get<Product>(url).pipe(
+      tap(_ => console.log(`fetched product id=${id}`)),
+      catchError(this.handleError<Product>(`getProduct id=${id}`))
+    );
   }
 
-  createProduct(product: Product): Observable<Product> {
-    const body = JSON.stringify(product);
-    return this.http.post<Product>(PRODUCTS_URL, body)
-    .pipe(catchError(this.handleError<Product>('createProduct', null)));
+  createProduct(newProduct: Product): Observable<Product> {
+    return this.http.post<Product>(this.productsUrl, newProduct, httpOptions).pipe(
+      tap((product: Product) => console.log(`added product w/ id=${product.id}`)),
+      catchError(this.handleError<Product>('addProduct'))
+    );
   }
 
   updateProduct(product: Product): Observable<Product> {
-    return this.http.put<Product>(`${PRODUCTS_URL}/${product.id}`, JSON.stringify(product))
-    .pipe(catchError(this.handleError<Product>('updateProduct', null)));
+    const url = `${this.productsUrl}/${product.id}`;
+
+    return this.http.put<Product>(url, product, httpOptions).pipe(
+      tap(_ => console.log(`updated product id=${product.id}`)),
+      catchError(this.handleError<any>('updateProduct'))
+    );
   }
 
-  deleteProduct(product: Product): Observable<Product> {
-    return this.http.delete<Product>(`${PRODUCTS_URL}/${product.id}`)
-    .pipe(catchError(this.handleError<Product>('deleteProduct', null)));
+  deleteProduct(product: Product | number): Observable<Product> {
+    const id = typeof product === 'number' ? product : product.id;
+    const url = `${this.productsUrl}/${id}`;
+
+    return this.http.delete<Product>(url, httpOptions).pipe(
+      tap(_ => console.log(`deleted product id=${id}`)),
+      catchError(this.handleError<Product>('deleteProduct'))
+    );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
-      console.error(`${operation} failed: ${error.message}`);
 
-      return of(result as T);
+      console.error(error);
+      console.log(`${operation} failed: ${error.message}`);
+
+      return throwError(`${operation} failed: ${error.message}`);
     };
   }
 }

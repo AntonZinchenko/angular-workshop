@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <app-product *ngFor="let product of products$ | async" [data]="product">
+        <app-product *ngFor="let product of products$ | async" [product]="product" (buy)="onBuy($event)">
         </app-product>
     </div>
 </div>

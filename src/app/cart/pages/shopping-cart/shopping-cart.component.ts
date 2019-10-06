@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Product } from 'src/app/core/models/product';
 import { ShippingInfo } from 'src/app/core/models/shipping-info';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -10,14 +11,15 @@ import { ShippingInfo } from 'src/app/core/models/shipping-info';
 })
 export class ShoppingCartComponent implements OnInit {
 
-  selectedProducts: Product[];
+  selectedProducts$: Observable<Product[]>;
   shippingInfo: ShippingInfo = new ShippingInfo();
 
-  constructor(private shoppingCartService: ShoppingCartService, private router: Router) {
+  constructor(private shoppingCartService: ShoppingCartService,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.refreshCartData();
+    this.selectedProducts$ = this.shoppingCartService.getSelectedItems().asObservable();
   }
 
   onOrder(address: ShippingInfo) {
@@ -26,14 +28,9 @@ export class ShoppingCartComponent implements OnInit {
 
   onDeleteProduct(product: Product): void {
     this.shoppingCartService.removeProduct(product);
-    this.refreshCartData();
   }
 
-  showProducts() {
+  onShowProducts() {
     this.router.navigate(['products']);
-  }
-
-  private refreshCartData() {
-    this.selectedProducts = this.shoppingCartService.getSelectedItems();
   }
 }

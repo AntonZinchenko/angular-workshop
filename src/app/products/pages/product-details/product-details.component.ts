@@ -1,23 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { BaseListComponent } from '../base-product.component';
 import { ProductsService } from '../../services/products.service';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Subscription } from 'rxjs';
+import { Product } from 'src/app/core/models/product';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent extends BaseListComponent implements OnInit, OnDestroy {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
+  product: Product;
   private subs: Subscription[] = [];
 
-  constructor(protected router: Router,
-              protected shoppingCartService: ShoppingCartService,
+  constructor(private router: Router,
+              private shoppingCartService: ShoppingCartService,
               private route: ActivatedRoute,
               private productsService: ProductsService) {
-    super(router, shoppingCartService);
   }
 
   ngOnInit() {
@@ -35,7 +35,13 @@ export class ProductDetailsComponent extends BaseListComponent implements OnInit
     }
   }
 
-  showProducts() {
+  onBuy(): void {
+    if (this.product) {
+      this.shoppingCartService.addProduct(this.product);
+    }
+  }
+
+  onShowProducts() {
     this.router.navigate(['products']);
   }
 }

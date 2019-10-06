@@ -1,4 +1,4 @@
-<form #f="ngForm" novalidate (ngSubmit)="f.valid && createOrder(f.value)">
+<form class="address-form" #f="ngForm" novalidate (ngSubmit)="f.valid && onSubmit(f.value)">
     <div class="shipping-info">
         <div class="form-group col-xs-12">
             <h3>Shipping info</h3>

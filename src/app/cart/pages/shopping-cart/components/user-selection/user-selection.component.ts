@@ -19,7 +19,7 @@ export class UserSelectionComponent {
     return totalPrice;
   }
 
-  removeProduct(product: Product): void {
+  onRemoveProduct(product: Product): void {
     this.delete.emit(product);
   }
 }
