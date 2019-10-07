@@ -4,6 +4,10 @@ export class ShippingInfo {
     public shippingCity: string;
     public shippingAddress: string;
 
+    public constructor(init?: Partial<ShippingInfo>) {
+        Object.assign(this, init);
+    }
+
     public customer(): string {
         return `${this.firstName} ${this.lastName}`;
     }

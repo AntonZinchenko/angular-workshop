@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { ProductComponent } from './pages';
 import { ProductsRoutingModule, productsRouterComponents } from './products.routing.module';
 import { ToStarsPipe } from './pipes/stars.pipe';
 import { ProductsService } from './services/products.service';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    HttpClientModule,
+    SharedModule,
     ProductsRoutingModule
   ],
   declarations: [
@@ -19,6 +15,6 @@ import { ProductsService } from './services/products.service';
     ProductComponent,
     ToStarsPipe
   ],
-  providers: [ProductsService],
+  providers: [ProductsService]
 })
 export class ProductsModule { }

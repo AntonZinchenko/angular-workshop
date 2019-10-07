@@ -1,32 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { BaseListComponent } from '../base-product.component';
 import { ProductsService } from '../../services/products.service';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
+import { Subscription } from 'rxjs';
+import { Product } from 'src/app/core/models/product';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent extends BaseListComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
+  product: Product;
+  private subs: Subscription[] = [];
 
-  constructor(protected router: Router,
-              protected shoppingCartService: ShoppingCartService,
+  constructor(private router: Router,
+              private shoppingCartService: ShoppingCartService,
               private route: ActivatedRoute,
               private productsService: ProductsService) {
-    super(router, shoppingCartService);
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.productsService.getProduct(+params.get('id'))
-        .then(product => this.product = Object.assign({}, product))
-        .catch(err => console.log(err));
-    });
+    this.subs.push(this.route.paramMap.subscribe(params => {
+      this.subs.push(this.productsService.getProduct(+params.get('id'))
+        .subscribe(data => {
+          this.product = data;
+        }));
+    }));
   }
 
-  showProducts() {
+  ngOnDestroy(): void {
+    if (this.subs.length) {
+      this.subs.forEach(sub => sub.unsubscribe());
+    }
+  }
+
+  onBuy(): void {
+    if (this.product) {
+      this.shoppingCartService.addProduct(this.product);
+    }
+  }
+
+  onShowProducts() {
     this.router.navigate(['products']);
   }
 }

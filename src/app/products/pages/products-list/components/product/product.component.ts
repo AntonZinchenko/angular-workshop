@@ -1,7 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseListComponent } from '../../../base-product.component';
-import { ProductsService } from '../../../../services/products.service';
 import { Product } from 'src/app/core/models/product';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 
@@ -11,18 +9,20 @@ import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service
   styleUrls: ['./product.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductComponent extends BaseListComponent implements OnInit {
-  @Input() data: Product;
+export class ProductComponent {
+  @Input() product: Product;
+  @Output() buy = new EventEmitter<Product>();
 
-  constructor(protected productsService: ProductsService, protected router: Router, protected shoppingCartService: ShoppingCartService) {
-    super(router, shoppingCartService);
+  constructor(private router: Router) {
   }
 
-  ngOnInit(): void {
-    this.product = this.data;
+  onBuy(): void {
+    if (this.product) {
+      this.buy.emit(this.product);
+    }
   }
 
-  showDetails() {
+  onShowDetails() {
     this.router.navigate(['product', this.product.id]);
   }
 }

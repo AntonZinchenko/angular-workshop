@@ -1,0 +1,26 @@
+{
+    "common": {
+        "title": "My ecommerce library",
+        "cart": "Cart",
+        "continue": "Continue shopping"
+    },
+    "products": {
+        "price": "Price:",
+        "buy": "Add to cart",
+        "details": "Details"
+    },
+    "cart": {
+        "title": "Shopping Cart",
+        "empty": "No items",
+        "totalPrice": "Total",
+        "form": {
+            "title": "Shipping info",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "city": "Shipping City",
+            "address": "Shipping Address",
+            "order": "Checkout",
+            "warning": "is required."
+        }
+    }
+}
