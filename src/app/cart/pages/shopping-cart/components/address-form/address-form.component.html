@@ -1,4 +1,4 @@
-<form class="address-form" #f="ngForm" novalidate (ngSubmit)="f.valid && onSubmit(f.value)">
+<form class="address-form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="shipping-info">
         <div class="form-group col-xs-12">
             <h3>Shipping info</h3>
@@ -6,9 +6,8 @@
         <div class="form-group col-xs-6">
             <label class="control-label" for="firstName">First Name</label>
             <div class="controls">
-                <input id="firstName" name="firstName" required [(ngModel)]="address.firstName" #firstName="ngModel"
-                    type="text" class="form-control">
-                <small [hidden]="firstName.valid || (firstName.pristine && !f.submitted)" class="text-danger">
+                <input id="firstName" name="firstName" formControlName="firstName" type="text" class="form-control">
+                <small *ngIf="form.get('firstName').hasError('required')" class="text-danger">
                     First Name is required.
                 </small>
             </div>
@@ -16,9 +15,8 @@
         <div class="form-group col-xs-6">
             <label class="control-label" for="lastName">Last Name</label>
             <div class="controls">
-                <input id="lastName" name="lastName" required [(ngModel)]="address.lastName" #lastName="ngModel"
-                    type="text" class="form-control">
-                <small [hidden]="lastName.valid || (lastName.pristine && !f.submitted)" class="text-danger">
+                <input id="lastName" name="lastName" formControlName="lastName" type="text" class="form-control">
+                <small *ngIf="form.get('lastName').hasError('required')" class="text-danger">
                     Last Name is required.
                 </small>
             </div>
@@ -26,9 +24,8 @@
         <div class="form-group col-xs-3">
             <label class="control-label" for="shippingCity">Shipping City</label>
             <div class="controls">
-                <input id="shippingCity" name="shippingCity" required [(ngModel)]="address.shippingCity"
-                    #shippingCity="ngModel" type="text" class="form-control">
-                <small [hidden]="shippingCity.valid || (shippingCity.pristine && !f.submitted)" class="text-danger">
+                <input id="shippingCity" name="shippingCity" formControlName="shippingCity" type="text" class="form-control">
+                <small *ngIf="form.get('shippingCity').hasError('required')" class="text-danger">
                     Shipping City is required.
                 </small>
             </div>
@@ -36,17 +33,15 @@
         <div class="form-group col-xs-9">
             <label class="control-label" for="shippingAddress">Shipping Address</label>
             <div class="controls">
-                <input id="shippingAddress" name="shippingAddress" required [(ngModel)]="address.shippingAddress"
-                    #shippingAddress="ngModel" type="text" class="form-control" />
-                <small [hidden]="shippingAddress.valid || (shippingAddress.pristine && !f.submitted)"
-                    class="text-danger">
+                <input id="shippingAddress" name="shippingAddress" formControlName="shippingAddress" type="text" class="form-control" />
+                <small *ngIf="form.get('shippingAddress').hasError('required')" class="text-danger">
                     Shipping Address is required.
                 </small>
             </div>
         </div>
         <div class="form-group col-xs-9"></div>
         <div class="form-group col-xs-3">
-            <button type="submit" class="btn btn-success btn-block">
+            <button type="submit" [disabled]="!form.valid" class="btn btn-success btn-block">
                 Checkout
             </button>
         </div>

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductComponent } from './pages';
@@ -10,7 +9,6 @@ import { ProductsService } from './services/products.service';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     HttpClientModule,
     ProductsRoutingModule
   ],

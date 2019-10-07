@@ -17,13 +17,15 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <h3 *ngIf="!(selectedProducts$ | async)?.length">No items</h3>
-                    <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length > 0">
+                    <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length as hasRows; else noRows">
                         <app-user-selection [products]="selectedProducts$ | async" (delete)="onDeleteProduct($event)">
                         </app-user-selection>
                         <hr>
                         <app-address-form [address]="shippingInfo" (order)="onOrder($event)"></app-address-form>
                     </div>
+                    <ng-template #noRows>
+                        <h3>No items</h3>
+                    </ng-template>
                 </div>
             </div>
         </div>
