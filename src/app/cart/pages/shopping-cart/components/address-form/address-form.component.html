@@ -1,48 +1,48 @@
 <form class="address-form" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="shipping-info">
         <div class="form-group col-xs-12">
-            <h3>Shipping info</h3>
+            <h3>{{'cart.form.title' | translate}}</h3>
         </div>
         <div class="form-group col-xs-6">
-            <label class="control-label" for="firstName">First Name</label>
+            <label class="control-label" for="firstName">{{'cart.form.firstName' | translate}}</label>
             <div class="controls">
                 <input id="firstName" name="firstName" formControlName="firstName" type="text" class="form-control">
                 <small *ngIf="form.get('firstName').hasError('required')" class="text-danger">
-                    First Name is required.
+                    {{'cart.form.firstName' | translate}} {{'cart.form.warning' | translate}}
                 </small>
             </div>
         </div>
         <div class="form-group col-xs-6">
-            <label class="control-label" for="lastName">Last Name</label>
+            <label class="control-label" for="lastName">{{'cart.form.lastName' | translate}}</label>
             <div class="controls">
                 <input id="lastName" name="lastName" formControlName="lastName" type="text" class="form-control">
                 <small *ngIf="form.get('lastName').hasError('required')" class="text-danger">
-                    Last Name is required.
+                    {{'cart.form.lastName' | translate}} {{'cart.form.warning' | translate}}
                 </small>
             </div>
         </div>
         <div class="form-group col-xs-3">
-            <label class="control-label" for="shippingCity">Shipping City</label>
+            <label class="control-label" for="shippingCity">{{'cart.form.city' | translate}}</label>
             <div class="controls">
                 <input id="shippingCity" name="shippingCity" formControlName="shippingCity" type="text" class="form-control">
                 <small *ngIf="form.get('shippingCity').hasError('required')" class="text-danger">
-                    Shipping City is required.
+                    {{'cart.form.city' | translate}} {{'cart.form.warning' | translate}}
                 </small>
             </div>
         </div>
         <div class="form-group col-xs-9">
-            <label class="control-label" for="shippingAddress">Shipping Address</label>
+            <label class="control-label" for="shippingAddress">{{'cart.form.address' | translate}}</label>
             <div class="controls">
                 <input id="shippingAddress" name="shippingAddress" formControlName="shippingAddress" type="text" class="form-control" />
                 <small *ngIf="form.get('shippingAddress').hasError('required')" class="text-danger">
-                    Shipping Address is required.
+                    {{'cart.form.address' | translate}} {{'cart.form.warning' | translate}}
                 </small>
             </div>
         </div>
         <div class="form-group col-xs-9"></div>
         <div class="form-group col-xs-3">
             <button type="submit" [disabled]="!form.valid" class="btn btn-success btn-block">
-                Checkout
+                {{'cart.form.order' | translate}}
             </button>
         </div>
     </div>

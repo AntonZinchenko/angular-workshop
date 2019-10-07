@@ -6,12 +6,10 @@
                     <div class="panel-title">
                         <div class="row">
                             <div class="col-xs-9">
-                                <h5><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</h5>
+                                <h5><span class="glyphicon glyphicon-shopping-cart"></span> {{'cart.title' | translate}}</h5>
                             </div>
                             <div class="col-xs-3">
-                                <button (click)="onShowProducts()" type="button" class="btn btn-primary btn-sm btn-block">
-                                    <span class="glyphicon glyphicon-share-alt"></span> Continue shopping
-                                </button>
+                                <app-continue-button (redirect)="onShowProducts()"></app-continue-button>
                             </div>
                         </div>
                     </div>
@@ -24,7 +22,7 @@
                         <app-address-form [address]="shippingInfo" (order)="onOrder($event)"></app-address-form>
                     </div>
                     <ng-template #noRows>
-                        <h3>No items</h3>
+                        <h3>{{'cart.empty' | translate}}</h3>
                     </ng-template>
                 </div>
             </div>

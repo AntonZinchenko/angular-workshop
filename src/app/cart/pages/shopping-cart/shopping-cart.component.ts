@@ -23,7 +23,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onOrder(address: ShippingInfo) {
-    console.log('create order');
+    console.log('order created');
   }
 
   onDeleteProduct(product: Product): void {
