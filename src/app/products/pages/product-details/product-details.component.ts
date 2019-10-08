@@ -12,7 +12,8 @@ import { Product } from 'src/app/core/models/product';
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   product: Product;
-  private subs: Subscription[] = [];
+  private subs: Subscription[] = []; // Subscription имеет возможность создать дочерниеподписки с помощью
+  // add метода и когда отписываешься от основной, то от дочерней тоже произойдет отписка
 
   constructor(private router: Router,
               private shoppingCartService: ShoppingCartService,
@@ -21,6 +22,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // антипатерн subscribe in subscribe
     this.subs.push(this.route.paramMap.subscribe(params => {
       this.subs.push(this.productsService.getProduct(+params.get('id'))
         .subscribe(data => {
