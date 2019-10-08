@@ -20,6 +20,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
   imports: [
     BrowserModule,
     HttpClientModule,
+    // Было бы не плохо, написать, что это за модуль. Я не всеми модулями пользовался.
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
