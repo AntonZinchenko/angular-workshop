@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../models/product';
 
 const SHOPPING_CHART_CONTENT = 'shoppingCartContent';
@@ -8,23 +8,23 @@ const SHOPPING_CHART_CONTENT = 'shoppingCartContent';
 export class ShoppingCartService {
     private cache: BehaviorSubject<Product[]>;
 
-    getSelectedItems(): BehaviorSubject<Product[]> {
-        if (this.cache) {
-            return this.cache;
-        } else {
-            return this.cache = new BehaviorSubject(JSON.parse(localStorage.getItem(SHOPPING_CHART_CONTENT)));
-        }
+    constructor() {
+      this.cache = new BehaviorSubject(JSON.parse(localStorage.getItem(SHOPPING_CHART_CONTENT)));
+    }
+
+    get productsInCart$(): Observable<Product[]> {
+        return this.cache.asObservable();
     }
 
     addProduct(product: Product): void {
-        const list = this.getSelectedItems().getValue();
+        const list = this.cache.getValue();
         list.push(product);
 
         this.updateValues(list);
     }
 
     removeProduct(product: Product): void {
-        const list = this.getSelectedItems().getValue();
+        const list = this.cache.getValue();
         const index = list.findIndex(i => i.id === product.id);
         if (index !== -1) {
             this.updateValues(list.filter((v, i) => i !== index));

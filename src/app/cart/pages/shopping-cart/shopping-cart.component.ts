@@ -19,7 +19,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedProducts$ = this.shoppingCartService.getSelectedItems().asObservable();
+    this.selectedProducts$ = this.shoppingCartService.productsInCart$;
   }
 
   onOrder(address: ShippingInfo) {
