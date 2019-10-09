@@ -6,6 +6,7 @@ export class Product {
         public published: Date,
         public desc: string,
         public price: number,
+        public isAvailable: boolean,
         public rating: number,
         public url: string
     ) { }

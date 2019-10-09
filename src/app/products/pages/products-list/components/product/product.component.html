@@ -1,7 +1,7 @@
 <div class="col-sm-3">
     <article class="col-item">
         <div class="photo">
-            <a (click)="showDetails()">
+            <a (click)="onShowDetails()">
                 <img src="{{product.url}}" class="img-responsive" alt="{{product.title}}" />
             </a>
         </div>
@@ -15,7 +15,7 @@
             </div>
             <div class="separator clear-left">
                 <p class="btn-add">
-                    <a href="javascript:void(0)" (click)="onBuy()" class="hidden-sm">
+                    <a href="javascript:void(0)" [class.disabled]="!canBuy" (click)="canBuy && onBuy()" class="hidden-sm">
                         <i class="fa fa-shopping-cart"></i>{{'products.buy' | translate}}
                     </a>
                 </p>

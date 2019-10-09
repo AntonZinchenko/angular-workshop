@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Product } from '../models/product';
+import { map } from 'rxjs/operators';
 
 const SHOPPING_CHART_CONTENT = 'shoppingCartContent';
 
@@ -16,11 +17,17 @@ export class ShoppingCartService {
         return this.cache.asObservable();
     }
 
+    get totalPrice$(): Observable<number> {
+      return this.productsInCart$.pipe(map(res => {
+        let totalPrice = 0;
+        this.cache.getValue().forEach(i => totalPrice += i.price);
+        return totalPrice;
+      }));
+    }
+
     addProduct(product: Product): void {
         const list = this.cache.getValue();
-        list.push(product);
-
-        this.updateValues(list);
+        this.updateValues([...list, product]);
     }
 
     removeProduct(product: Product): void {

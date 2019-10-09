@@ -1,7 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
-import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 
 @Component({
   selector: 'app-product',
@@ -12,17 +10,17 @@ import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service
 export class ProductComponent {
   @Input() product: Product;
   @Output() buy = new EventEmitter<Product>();
-
-  constructor(private router: Router) {
-  }
+  @Output() details = new EventEmitter<number>();
 
   onBuy(): void {
-    if (this.product) {
-      this.buy.emit(this.product);
-    }
+    this.buy.emit(this.product);
+  }
+
+  get canBuy(): boolean {
+    return this.product.isAvailable;
   }
 
   onShowDetails() {
-    this.router.navigate(['product', this.product.id]);
+    this.details.emit(this.product.id);
   }
 }

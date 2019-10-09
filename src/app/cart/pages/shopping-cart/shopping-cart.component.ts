@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class ShoppingCartComponent implements OnInit {
 
   selectedProducts$: Observable<Product[]>;
+  totalPrice$: Observable<number>;
   shippingInfo: ShippingInfo = new ShippingInfo();
 
   constructor(private shoppingCartService: ShoppingCartService,
@@ -20,10 +21,15 @@ export class ShoppingCartComponent implements OnInit {
 
   ngOnInit() {
     this.selectedProducts$ = this.shoppingCartService.productsInCart$;
+    this.totalPrice$ = this.shoppingCartService.totalPrice$;
   }
 
   onOrder(address: ShippingInfo) {
     console.log('order created');
+  }
+
+  onAddProduct(product: Product): void {
+    this.shoppingCartService.addProduct(product);
   }
 
   onDeleteProduct(product: Product): void {
