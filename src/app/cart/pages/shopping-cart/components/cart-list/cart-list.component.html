@@ -1,5 +1,5 @@
 <div *ngFor="let product of products | groupBy: 'id'">
-  <div class="row selected-item">
+  <div appSelectedItem class="row">
     <app-cart-list-item
       [product]="product.items[0]"
       [quantity]="product.items.length"
@@ -8,10 +8,7 @@
   </div>
   <hr />
 </div>
-<div class="row text-center">
-  <div class="col-xs-9">
-    <h4 class="text-right total-price">
-      {{"cart.totalPrice" | translate}} <strong>${{totalPrice}}</strong>
-    </h4>
-  </div>
-</div>
+<app-cart-list-footer
+  [totalPrice]="totalPrice"
+  [totalQuantity]="totalQuantity"></app-cart-list-footer>
+

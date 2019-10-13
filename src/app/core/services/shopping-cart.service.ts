@@ -20,8 +20,14 @@ export class ShoppingCartService {
     get totalPrice$(): Observable<number> {
       return this.productsInCart$.pipe(map(res => {
         let totalPrice = 0;
-        this.cache.getValue().forEach(i => totalPrice += i.price);
+        res.forEach(i => totalPrice += i.price);
         return totalPrice;
+      }));
+    }
+
+    get totalQuantity$(): Observable<number> {
+      return this.productsInCart$.pipe(map(res => {
+        return res.length;
       }));
     }
 

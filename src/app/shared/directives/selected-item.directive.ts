@@ -6,8 +6,7 @@ enum RowBackgroundColor {
 }
 
 @Directive({
-  // tslint:disable-next-line: directive-selector
-  selector: '.selected-item'
+  selector: '[appSelectedItem]'
 })
 export class SelectedItemDirective {
 

@@ -21,6 +21,7 @@
             <app-cart-list
               [products]="selectedProducts$ | async"
               [totalPrice]="totalPrice$ | async"
+              [totalQuantity]="totalQuantity$ | async"
               (delete)="onDeleteProduct($event)"
               (add)="onAddProduct($event)"></app-cart-list>
             <hr />

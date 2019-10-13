@@ -10,6 +10,7 @@ import { Product } from 'src/app/core/models/product';
 export class CartListComponent {
   @Input() products: Product[];
   @Input() totalPrice: number;
+  @Input() totalQuantity: number;
   @Output() add = new EventEmitter<Product>();
   @Output() delete = new EventEmitter<Product>();
 

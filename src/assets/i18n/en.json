@@ -12,7 +12,7 @@
     "cart": {
         "title": "Shopping Cart",
         "empty": "No items",
-        "totalPrice": "Total",
+        "total": "Total ${{price}} (items: {{count}})",
         "form": {
             "title": "Shipping info",
             "firstName": "First Name",
