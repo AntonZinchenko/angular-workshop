@@ -1,0 +1,14 @@
+<div *ngFor="let product of products | groupBy: 'id'">
+  <div appSelectedItem class="row">
+    <app-cart-list-item
+      [product]="product.items[0]"
+      [quantity]="product.items.length"
+      (add)="onAddProduct($event)"
+      (delete)="onRemoveProduct($event)"></app-cart-list-item>
+  </div>
+  <hr />
+</div>
+<app-cart-list-footer
+  [totalPrice]="totalPrice"
+  [totalQuantity]="totalQuantity"></app-cart-list-footer>
+

@@ -2,21 +2,18 @@ import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from 
 import { Product } from 'src/app/core/models/product';
 
 @Component({
-  selector: 'app-user-selection',
-  templateUrl: './user-selection.component.html',
+  selector: 'app-cart-list-item',
+  templateUrl: './cart-list-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserSelectionComponent {
-  @Input() products: Product[] = [];
+export class CartListItemComponent {
+  @Input() product: Product;
+  @Input() quantity: number;
+  @Output() add = new EventEmitter<Product>();
   @Output() delete = new EventEmitter<Product>();
 
-  get totalPrice() {
-    let totalPrice = 0;
-    if (this.products) {
-      this.products.forEach(i => totalPrice += i.price);
-    }
-
-    return totalPrice;
+  onAddProduct(product: Product): void {
+    this.add.emit(product);
   }
 
   onRemoveProduct(product: Product): void {

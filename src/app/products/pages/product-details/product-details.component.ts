@@ -21,6 +21,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // TODO: remove nested subs!
     this.subs.push(this.route.paramMap.subscribe(params => {
       this.subs.push(this.productsService.getProduct(+params.get('id'))
         .subscribe(data => {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ContinueButtonComponent } from './components/continue-button/continue-button.component';
+import { SelectedItemDirective } from './directives/selected-item.directive';
 
 @NgModule({
   imports: [
@@ -11,13 +12,15 @@ import { ContinueButtonComponent } from './components/continue-button/continue-b
     HttpClientModule
   ],
   declarations: [
-    ContinueButtonComponent
+    ContinueButtonComponent,
+    SelectedItemDirective
   ],
   exports: [
     CommonModule,
     TranslateModule,
     HttpClientModule,
-    ContinueButtonComponent
+    ContinueButtonComponent,
+    SelectedItemDirective
   ]
 })
 export class SharedModule { }

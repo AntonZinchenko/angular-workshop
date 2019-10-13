@@ -1,31 +1,39 @@
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <div class="panel-title">
-                        <div class="row">
-                            <div class="col-xs-9">
-                                <h5><span class="glyphicon glyphicon-shopping-cart"></span> {{'cart.title' | translate}}</h5>
-                            </div>
-                            <div class="col-xs-3">
-                                <app-continue-button (redirect)="onShowProducts()"></app-continue-button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length as hasRows; else noRows">
-                        <app-user-selection [products]="selectedProducts$ | async" (delete)="onDeleteProduct($event)">
-                        </app-user-selection>
-                        <hr>
-                        <app-address-form [address]="shippingInfo" (order)="onOrder($event)"></app-address-form>
-                    </div>
-                    <ng-template #noRows>
-                        <h3>{{'cart.empty' | translate}}</h3>
-                    </ng-template>
-                </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <div class="row">
+              <div class="col-xs-9">
+                <h5>
+                  <span class="glyphicon glyphicon-shopping-cart"></span>{{ "cart.title" | translate }}
+                </h5>
+              </div>
+              <div class="col-xs-3">
+                <app-continue-button (redirect)="onShowProducts()"></app-continue-button>
+              </div>
             </div>
+          </div>
         </div>
+        <div class="panel-body">
+          <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length as hasRows; else noRows">
+            <app-cart-list
+              [products]="selectedProducts$ | async"
+              [totalPrice]="totalPrice$ | async"
+              [totalQuantity]="totalQuantity$ | async"
+              (delete)="onDeleteProduct($event)"
+              (add)="onAddProduct($event)"></app-cart-list>
+            <hr />
+            <app-address-form
+              [address]="shippingInfo"
+              (order)="onOrder($event)"></app-address-form>
+          </div>
+          <ng-template #noRows>
+            <h3>{{ "cart.empty" | translate }}</h3>
+          </ng-template>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
