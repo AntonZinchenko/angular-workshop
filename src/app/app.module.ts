@@ -11,11 +11,16 @@ import { ProductsModule } from './products/products.module';
 import { ShoppingCartService } from './core/services/shopping-cart.service';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AboutComponent } from './pages/about/about.component';
+import { ClickDirective } from './shared/directives/click.directive';
+import { LocalStorageService } from './core/services/local-storage.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    AboutComponent,
+    ClickDirective
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,10 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
     CartModule,
     ProductsModule
   ],
-  providers: [ShoppingCartService],
+  providers: [
+    LocalStorageService,
+    ShoppingCartService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,6 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartListFooterComponent {
-  @Input() totalPrice: number;
+  @Input() totalSum: number;
   @Input() totalQuantity: number;
 }

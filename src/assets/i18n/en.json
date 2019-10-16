@@ -1,26 +1,43 @@
 {
-    "common": {
-        "title": "My ecommerce library",
-        "cart": "Cart",
-        "continue": "Continue shopping"
+  "about":{
+    "title": "Services and DI",
+    "configService": {
+      "title": "1. ConfigOptionsService (with LocalStorageService)",
+      "value": "Config from storage: {{value}}",
+      "update": "Update"
     },
-    "products": {
-        "price": "Price:",
-        "buy": "Add to cart",
-        "details": "Details"
+    "constantsService": {
+      "title": "2. Constants service"
     },
-    "cart": {
-        "title": "Shopping Cart",
-        "empty": "No items",
-        "total": "Total ${{price}} (items: {{count}})",
-        "form": {
-            "title": "Shipping info",
-            "firstName": "First Name",
-            "lastName": "Last Name",
-            "city": "Shipping City",
-            "address": "Shipping Address",
-            "order": "Checkout",
-            "warning": "is required."
-        }
+    "generatorService": {
+      "title": "3. Random sequence (length: {{length}})"
+    },
+    "directive": {
+      "title": "4. Custom click directive"
     }
+  },
+  "common": {
+    "title": "My ecommerce library",
+    "cart": "Cart",
+    "continue": "Continue shopping"
+  },
+  "products": {
+    "price": "Price:",
+    "buy": "Add to cart",
+    "details": "Details"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "No items",
+    "total": "Total ${{price}} (items: {{count}})",
+    "form": {
+      "title": "Shipping info",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "city": "Shipping City",
+      "address": "Shipping Address",
+      "order": "Checkout",
+      "warning": "is required."
+    }
+  }
 }

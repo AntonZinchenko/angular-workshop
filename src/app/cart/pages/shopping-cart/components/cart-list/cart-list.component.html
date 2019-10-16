@@ -3,12 +3,13 @@
     <app-cart-list-item
       [product]="product.items[0]"
       [quantity]="product.items.length"
-      (add)="onAddProduct($event)"
-      (delete)="onRemoveProduct($event)"></app-cart-list-item>
+      (increase)="onIncrease($event)"
+      (decrease)="onDecrease($event)"
+      (remove)="onRemoveProduct($event)"></app-cart-list-item>
   </div>
   <hr />
 </div>
 <app-cart-list-footer
-  [totalPrice]="totalPrice"
+  [totalSum]="totalSum"
   [totalQuantity]="totalQuantity"></app-cart-list-footer>
 
