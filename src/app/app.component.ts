@@ -16,11 +16,13 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.sub = this.translate.get('common.title').subscribe(translation => {
+      // желательно через Renderer2 это делать
       this.appTitle.nativeElement.innerHTML = translation;
     });
   }
 
   ngOnDestroy(): void {
+    // ngAfterViewInit выполняется раньше, а значит if можно не писать
     if (this.sub) {
       this.sub.unsubscribe();
     }

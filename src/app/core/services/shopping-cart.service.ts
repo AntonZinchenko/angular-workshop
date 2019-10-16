@@ -20,6 +20,7 @@ export class ShoppingCartService {
     get totalPrice$(): Observable<number> {
       return this.productsInCart$.pipe(map(res => {
         let totalPrice = 0;
+        // можно попробовать использовать reduce
         res.forEach(i => totalPrice += i.price);
         return totalPrice;
       }));

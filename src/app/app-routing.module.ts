@@ -5,6 +5,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 const routes: Routes = [
   {
     path: '',
+    // для этого свойства уже рекомендуют использовать динамический импорт
     loadChildren: './products/products.module#ProductsModule'
   },
   {
