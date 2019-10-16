@@ -9,14 +9,19 @@ import { Product } from 'src/app/core/models/product';
 export class CartListItemComponent {
   @Input() product: Product;
   @Input() quantity: number;
-  @Output() add = new EventEmitter<Product>();
-  @Output() delete = new EventEmitter<Product>();
+  @Output() increase = new EventEmitter<Product>();
+  @Output() decrease = new EventEmitter<Product>();
+  @Output() remove = new EventEmitter<Product>();
 
-  onAddProduct(product: Product): void {
-    this.add.emit(product);
+  onIncrease(product: Product): void {
+    this.increase.emit(product);
+  }
+
+  onDecrease(product: Product): void {
+    this.decrease.emit(product);
   }
 
   onRemoveProduct(product: Product): void {
-    this.delete.emit(product);
+    this.remove.emit(product);
   }
 }

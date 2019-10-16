@@ -1,0 +1,20 @@
+<h1>{{ 'about.title' | translate }}</h1>
+
+<h2>{{ 'about.configService.title' | translate }}</h2>
+<span>{{'about.configService.value' | translate:{ value: configString } }}</span>
+
+<div>
+  <span>Login:</span>
+  <input type="text" #forStorage value="{{configInstance.login}}" />
+  <button type="button" (click)="updateLogin(forStorage.value)">{{ 'about.configService.update' | translate }}</button>
+</div>
+
+
+<h2>{{ 'about.constantsService.title' | translate }}</h2>
+<span>{{constTitle}}</span>
+
+<h2>{{'about.generatorService.title' | translate:{ length: lengthFromService } }}</h2>
+[<span *ngFor="let item of randomSequence; let isLast=last">{{item}}{{isLast ? '' : ', '}}</span>]
+
+<h2>{{ 'about.directive.title' | translate }}</h2>
+<input type="text" appClickFontChanger defaultFontSize="10" readonly value="click me" />

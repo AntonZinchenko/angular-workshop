@@ -20,10 +20,11 @@
           <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length as hasRows; else noRows">
             <app-cart-list
               [products]="selectedProducts$ | async"
-              [totalPrice]="totalPrice$ | async"
+              [totalSum]="totalSum$ | async"
               [totalQuantity]="totalQuantity$ | async"
-              (delete)="onDeleteProduct($event)"
-              (add)="onAddProduct($event)"></app-cart-list>
+              (increase)="onIncrease($event)"
+              (decrease)="onDecrease($event)"
+              (remove)="onRemoveProduct($event)"></app-cart-list>
             <hr />
             <app-address-form
               [address]="shippingInfo"
