@@ -1,3 +1,9 @@
 .hr {
 	margin-top: 0;
 }
+
+.cart-header {
+  flex-flow: nowrap;
+  display: flex;
+  align-items: baseline;
+}

@@ -1,7 +1,7 @@
 <div class="row text-center">
   <div class="col-xs-9">
     <h4 class="text-right total-price">
-      <span>{{'cart.total' | translate:{ price: totalSum, count: totalQuantity } }}</span>
+      <span>{{'cart.total' | translate:{ price: totalSum | currency:'USD':'symbol', count: totalQuantity } }}</span>
     </h4>
   </div>
 </div>

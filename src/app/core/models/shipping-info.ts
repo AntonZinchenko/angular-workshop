@@ -16,3 +16,9 @@ export class ShippingInfo {
         return `${this.shippingCity} ${this.shippingAddress}`;
     }
 }
+
+export enum OrderType {
+  Title = 'title',
+  Price = 'price',
+  Quantity = 'quantity'
+}

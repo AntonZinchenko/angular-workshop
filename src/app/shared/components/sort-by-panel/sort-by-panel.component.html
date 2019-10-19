@@ -1,0 +1,9 @@
+<div class="order-by-panel">
+    <label for="orderBy">{{ "cart.orderBy" | translate }}</label>
+    <select id="orderBy" name="orderBy" (change)="onSwitchOrderField($event.target.value)">
+      <option *ngFor="let fieldName of orderValues">{{fieldName}}</option>
+    </select>
+    <button type="button" (click)="onSwitchOrderDirection()" class="btn btn-link btn-xs">
+      <span class="glyphicon" [ngClass]="(isAsc) ? 'glyphicon-chevron-up' : 'glyphicon-chevron-down'"> </span>
+    </button>
+  </div>
