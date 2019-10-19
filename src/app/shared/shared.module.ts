@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ContinueButtonComponent } from './components/continue-button/continue-button.component';
+import { SortByPanelComponent } from './components/sort-by-panel/sort-by-panel.component';
 import { SelectedItemDirective } from './directives/selected-item.directive';
+import { OrderByPipe } from './pipes/order-by.pipe';
 
 @NgModule({
   imports: [
@@ -13,14 +15,18 @@ import { SelectedItemDirective } from './directives/selected-item.directive';
   ],
   declarations: [
     ContinueButtonComponent,
-    SelectedItemDirective
+    SortByPanelComponent,
+    SelectedItemDirective,
+    OrderByPipe
   ],
   exports: [
     CommonModule,
     TranslateModule,
     HttpClientModule,
     ContinueButtonComponent,
-    SelectedItemDirective
+    SortByPanelComponent,
+    SelectedItemDirective,
+    OrderByPipe
   ]
 })
 export class SharedModule { }

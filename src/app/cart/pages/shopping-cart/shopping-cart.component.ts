@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Product } from 'src/app/core/models/product';
-import { ShippingInfo } from 'src/app/core/models/shipping-info';
+import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -16,6 +16,8 @@ export class ShoppingCartComponent implements OnInit {
   totalSum$: Observable<number>;
   totalQuantity$: Observable<number>;
   shippingInfo: ShippingInfo = new ShippingInfo();
+  field: OrderType = OrderType.Quantity;
+  isAsc: boolean;
 
   constructor(private shoppingCartService: ShoppingCartService,
               private router: Router) {
@@ -45,5 +47,13 @@ export class ShoppingCartComponent implements OnInit {
 
   onShowProducts() {
     this.router.navigate(['products']);
+  }
+
+  onSwitchOrderArgs(newField: OrderType) {
+    this.field = newField;
+  }
+
+  switchOrderDirection(newDirection: boolean) {
+    this.isAsc = newDirection;
   }
 }

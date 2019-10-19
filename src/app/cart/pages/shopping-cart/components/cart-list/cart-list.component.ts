@@ -1,5 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { Product } from 'src/app/core/models/product';
+import { Product, ProductGroup } from 'src/app/core/models/product';
 
 @Component({
   selector: 'app-cart-list',
@@ -8,7 +8,7 @@ import { Product } from 'src/app/core/models/product';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartListComponent {
-  @Input() products: Product[];
+  @Input() groups: ProductGroup[];
   @Input() totalSum: number;
   @Input() totalQuantity: number;
   @Output() increase = new EventEmitter<Product>();

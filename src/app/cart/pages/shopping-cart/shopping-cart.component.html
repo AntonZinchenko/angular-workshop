@@ -5,10 +5,15 @@
         <div class="panel-heading">
           <div class="panel-title">
             <div class="row">
-              <div class="col-xs-9">
+              <div class="col-xs-9 cart-header">
                 <h5>
                   <span class="glyphicon glyphicon-shopping-cart"></span>{{ "cart.title" | translate }}
                 </h5>
+                <app-sort-by-panel
+                  [field]="field"
+                  [isAsc]="isAsc"
+                  (switchOrderField)="onSwitchOrderArgs($event)"
+                  (switchOrderDirection)="switchOrderDirection($event)"></app-sort-by-panel>
               </div>
               <div class="col-xs-3">
                 <app-continue-button (redirect)="onShowProducts()"></app-continue-button>
@@ -19,7 +24,7 @@
         <div class="panel-body">
           <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length as hasRows; else noRows">
             <app-cart-list
-              [products]="selectedProducts$ | async"
+              [groups]="selectedProducts$ | async | orderBy: field: isAsc"
               [totalSum]="totalSum$ | async"
               [totalQuantity]="totalQuantity$ | async"
               (increase)="onIncrease($event)"

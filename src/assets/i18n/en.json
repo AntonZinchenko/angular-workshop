@@ -29,7 +29,8 @@
   "cart": {
     "title": "Shopping Cart",
     "empty": "No items",
-    "total": "Total ${{price}} (items: {{count}})",
+    "orderBy": "Order by:",
+    "total": "Total {{price}} (items: {{count}})",
     "form": {
       "title": "Shipping info",
       "firstName": "First Name",
