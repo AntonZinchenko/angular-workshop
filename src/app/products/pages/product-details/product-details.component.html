@@ -14,6 +14,7 @@
                         <i class="fa fa-star gold" *ngFor="let isEnabled of product.rating | toStars:5"
                             [ngClass]="isEnabled ? 'fa-star gold' : 'fa-star-o'"></i>
                         <hr>
+                        <!-- Тут не получиться применить пайп currency? -->
                         <div class="product-price">{{'products.price' | translate}} $ {{product.price}}</div>
                         <hr>
                         <div class="btn-group cart">

@@ -36,6 +36,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  // в шаблоне есть параметр, а тут нет
+  // ERROR in src/app/products/pages/product-details/product-details.component.html(21,37): Expected 0 arguments, but got 1.
   onBuy(): void {
     if (this.product) {
       this.shoppingCartService.addProduct(this.product);
