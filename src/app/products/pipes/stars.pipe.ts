@@ -10,3 +10,4 @@ export class ToStarsPipe implements PipeTransform {
     return result;
   }
 }
+// может быть переместить в shared?

@@ -23,6 +23,7 @@
         </div>
         <div class="panel-body">
           <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length as hasRows; else noRows">
+            <!-- Есть вериятность двух запросов, когда будете получать данные с сервера, так как два раза async используется: тут и выше  -->
             <app-cart-list
               [groups]="selectedProducts$ | async | orderBy: field: isAsc"
               [totalSum]="totalSum$ | async"

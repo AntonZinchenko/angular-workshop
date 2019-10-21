@@ -8,6 +8,8 @@ const CONSTANTS_TOKEN = new InjectionToken('constantsService');
 
 const SEQUENCE_LENGTH = 10;
 const SeqLength = new InjectionToken('n');
+// Эта функция должна не создавать сервис, а использовать готовый из deps: [] и вызывать у него метод
+// для получения результата, который будет привязан к токену
 export const GeneratorFactory = (n: number) => new GeneratorService(n);
 
 @Component({
