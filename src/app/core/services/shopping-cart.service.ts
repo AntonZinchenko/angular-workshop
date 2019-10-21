@@ -19,9 +19,8 @@ export class ShoppingCartService {
     }
 
     get totalSum$(): Observable<number> {
-      return this.productsInCart$.pipe(map(res => {
-        return res.reduce((sum, current) => sum + current.price, 0);
-      }));
+      return this.productsInCart$.pipe(
+        map(res => res.reduce((sum, current) => sum + current.price, 0)));
     }
 
     get totalQuantity$(): Observable<number> {

@@ -2,16 +2,17 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent implements OnInit, OnDestroy {
-  product: Product;
+export class ProductDetailsComponent implements OnInit {
+  product$: Observable<Product>;
   private subs: Subscription[] = [];
 
   constructor(private router: Router,
@@ -21,24 +22,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // TODO: remove nested subs!
-    this.subs.push(this.route.paramMap.subscribe(params => {
-      this.subs.push(this.productsService.getProduct(+params.get('id'))
-        .subscribe(data => {
-          this.product = data;
-        }));
-    }));
+    this.product$ = this.route.paramMap.pipe(
+      switchMap(params => this.productsService.getProduct(+params.get('id'))));
   }
 
-  ngOnDestroy(): void {
-    if (this.subs.length) {
-      this.subs.forEach(sub => sub.unsubscribe());
-    }
-  }
-
-  onBuy(): void {
-    if (this.product) {
-      this.shoppingCartService.addProduct(this.product);
+  onBuy(product: Product): void {
+    if (product) {
+      this.shoppingCartService.addProduct(product);
     }
   }
 

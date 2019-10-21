@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="product">
+<div class="container-fluid" *ngIf="product$ | async as product">
     <div class="content-wrapper">
         <div class="item-container">
             <div class="container">
