@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form #f="ngForm" novalidate (ngSubmit)="onSave(f.value, f.valid)">
+                <input type="hidden" name="id" id="id" [(ngModel)]="product.id" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="title">{{'admin.product.fields.title.name' | translate}}</label>
+                            <input id="title" name="title" required type="text" [(ngModel)]="product.title" #title="ngModel" placeholder="Title" class="form-control input-md" />
+                            <small [hidden]="title.valid || (title.pristine && !f.submitted)" class="text-danger">
+                              {{'admin.product.fields.title.err' | translate}}
+                        </small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="author">{{'admin.product.fields.author.name' | translate}}</label>
+                            <input id="author" name="author" required type="text" [(ngModel)]="product.author" #author="ngModel" placeholder="Author" class="form-control input-md" />
+                            <small [hidden]="author.valid || (author.pristine && !f.submitted)" class="text-danger">
+                              {{'admin.product.fields.author.err' | translate}}
+                        </small>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label class="control-label" for="url">{{'admin.product.fields.icon.name' | translate}}</label>
+                            <input id="url" name="url" required type="text" [(ngModel)]="product.url" #url="ngModel" placeholder="Icon URL" class="form-control input-md" />
+                            <small [hidden]="url.valid || (url.pristine && !f.submitted)" class="text-danger">
+                              {{'admin.product.fields.icon.err' | translate}}
+                        </small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="price">{{'admin.product.fields.price.name' | translate}}</label>
+                            <input id="price" name="price" required min="0" max="100" step="1" type="number" [(ngModel)]="product.price" #price="ngModel" placeholder="Price" class="form-control input-md" />
+                            <small [hidden]="price.valid || (price.pristine && !f.submitted)" class="text-danger">
+                              {{'admin.product.fields.price.err' | translate}}
+                        </small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="rating">{{'admin.product.fields.rating.name' | translate}}</label>
+                            <input id="rating" name="rating" required min="0" max="5" step="1" type="number" [(ngModel)]="product.rating" #rating="ngModel" placeholder="Price" class="form-control input-md" />
+                            <small [hidden]="rating.valid || (rating.pristine && !f.submitted)" class="text-danger">
+                              {{'admin.product.fields.rating.err' | translate}}
+                        </small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="control-label" for="published">{{'admin.product.fields.published.name' | translate}}</label>
+                            <input id="published" name="published" [ngModel]="product.published | date:'dd.MM.yyyy'" #published="ngModel" required type="text" class="form-control input-md" />
+                            <small [hidden]="published.valid || (published.pristine && !f.submitted)" class="text-danger">
+                              {{'admin.product.fields.published.err' | translate}}
+                        </small>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="desc">{{'admin.product.fields.desc.name' | translate}}</label>
+                            <textarea class="form-control" id="desc" name="desc" required [(ngModel)]="product.desc" #desc="ngModel" placeholder="Description" rows="5"></textarea>
+                            <small [hidden]="desc.valid || (desc.pristine && !f.submitted)" class="text-danger">
+                              {{'admin.product.fields.desc.err' | translate}}
+                        </small>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">{{'admin.product.actions.save' | translate}}</button>
+                                <a href="javascript:void(0)" (click)="onGoBack()" class="btn btn-default">{{'admin.product.actions.cancel' | translate}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

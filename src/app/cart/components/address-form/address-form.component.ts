@@ -25,6 +25,5 @@ export class AddressFormComponent {
 
   onSubmit() {
     this.order.emit(new ShippingInfo(this.form.value));
-   // this.form.reset();
   }
 }

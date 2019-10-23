@@ -6,12 +6,14 @@ import { ContinueButtonComponent } from './components/continue-button/continue-b
 import { SortByPanelComponent } from './components/sort-by-panel/sort-by-panel.component';
 import { SelectedItemDirective } from './directives/selected-item.directive';
 import { OrderByPipe } from './pipes/order-by.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     TranslateModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     ContinueButtonComponent,
@@ -22,6 +24,7 @@ import { OrderByPipe } from './pipes/order-by.pipe';
   exports: [
     CommonModule,
     TranslateModule,
+    ReactiveFormsModule,
     HttpClientModule,
     ContinueButtonComponent,
     SortByPanelComponent,

@@ -1,0 +1,13 @@
+<td align="center">
+  <a class="btn btn-default" (click)="onEdit()"><em class="fa fa-pencil"></em></a>
+  <a class="btn btn-danger" (click)="onDelete()"><em class="fa fa-trash"></em></a>
+</td>
+<td>{{order.shippingInfo.firstName}} {{order.shippingInfo.lastName}}</td>
+<td>{{order.shippingInfo.shippingCity}} {{order.shippingInfo.shippingAddress}}</td>
+<td>
+  <ul>
+    <li *ngFor="let product of order.products">{{product.title}}</li>
+  </ul>
+</td>
+<td>{{order.completed ? 'completed' : 'processing'}} </td>
+

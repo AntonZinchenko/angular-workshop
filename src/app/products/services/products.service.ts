@@ -12,13 +12,13 @@ const httpOptions = {
 @Injectable()
 export class ProductsService {
 
-  private productsUrl = environment.productsUrl;
+  private backendUrl = `${environment.backend}/products`;
 
   constructor(private http: HttpClient) {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl)
+    return this.http.get<Product[]>(this.backendUrl)
       .pipe(
         tap(products => console.log(`fetched ${products.length} products`)),
         catchError(this.handleError('getProducts', []))
@@ -26,7 +26,7 @@ export class ProductsService {
   }
 
   getProduct(id: number): Observable<Product> {
-    const url = `${this.productsUrl}/${id}`;
+    const url = `${this.backendUrl}/${id}`;
     return this.http.get<Product>(url).pipe(
       tap(_ => console.log(`fetched product id=${id}`)),
       catchError(this.handleError<Product>(`getProduct id=${id}`))
@@ -34,14 +34,14 @@ export class ProductsService {
   }
 
   createProduct(newProduct: Product): Observable<Product> {
-    return this.http.post<Product>(this.productsUrl, newProduct, httpOptions).pipe(
+    return this.http.post<Product>(this.backendUrl, newProduct, httpOptions).pipe(
       tap((product: Product) => console.log(`added product w/ id=${product.id}`)),
       catchError(this.handleError<Product>('addProduct'))
     );
   }
 
   updateProduct(product: Product): Observable<Product> {
-    const url = `${this.productsUrl}/${product.id}`;
+    const url = `${this.backendUrl}/${product.id}`;
 
     return this.http.put<Product>(url, product, httpOptions).pipe(
       tap(_ => console.log(`updated product id=${product.id}`)),
@@ -51,7 +51,7 @@ export class ProductsService {
 
   deleteProduct(product: Product | number): Observable<Product> {
     const id = typeof product === 'number' ? product : product.id;
-    const url = `${this.productsUrl}/${id}`;
+    const url = `${this.backendUrl}/${id}`;
 
     return this.http.delete<Product>(url, httpOptions).pipe(
       tap(_ => console.log(`deleted product id=${id}`)),
