@@ -12,13 +12,21 @@
           <a [routerLink]="['/']" class="navbar-brand"><span #appTitle></span></a>
         </div>
         <div class="collapse navbar-collapse">
+          <p class="navbar-text navbar-right" *ngIf="!isLoggedIn">
+            <a [routerLink]="['admin']" class="navbar-link"><i class="fa fa-sign-in"></i> {{'common.login' | translate}}</a>
+          </p>
+          <p class="navbar-text navbar-right" *ngIf="isLoggedIn">
+            <a href="javascript:void(0)" (click)="logout()" class="navbar-link"><i class="fa fa-sign-in"></i> {{'common.logout' | translate}}</a>
+          </p>
+          <p class="navbar-text navbar-right" *ngIf="isLoggedIn">
+            <a [routerLink]="['admin']" class="navbar-link"><i class="fa fa-cogs"></i> {{'common.manage' | translate}}</a>
+          </p>
           <p class="navbar-text navbar-right">
             <a [routerLink]="['cart']" class="navbar-link"><i class="fa fa-shopping-cart"></i> {{'common.cart' | translate}}</a>
           </p>
         </div>
       </div>
     </nav>
-
     <div class="container">
       <router-outlet></router-outlet>
     </div>

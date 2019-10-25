@@ -14,11 +14,16 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AboutComponent } from './pages/about/about.component';
 import { ClickDirective } from './shared/directives/click.directive';
 import { LocalStorageService } from './core/services/local-storage.service';
+import { OrdersService } from './core/services/orders.service';
+import { AuthService } from './core/services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
+    LoginComponent,
     AboutComponent,
     ClickDirective
   ],
@@ -38,7 +43,10 @@ import { LocalStorageService } from './core/services/local-storage.service';
   ],
   providers: [
     LocalStorageService,
-    ShoppingCartService
+    ShoppingCartService,
+    OrdersService,
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

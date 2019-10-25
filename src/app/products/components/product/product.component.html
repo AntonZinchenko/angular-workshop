@@ -10,7 +10,7 @@
                 <div class="price-details col-md-6">
                     <p class="details">{{product.desc | slice:0:100}}..</p>
                     <h1>{{product.title}}</h1>
-                    <span class="price-new">${{product.price}}</span>
+                    <span class="price-new">{{product.price | currency:'USD':'symbol'}}</span>
                 </div>
             </div>
             <div class="separator clear-left">

@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../services/products.service';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
 import { switchMap } from 'rxjs/operators';
 
@@ -13,7 +13,6 @@ import { switchMap } from 'rxjs/operators';
 })
 export class ProductDetailsComponent implements OnInit {
   product$: Observable<Product>;
-  private subs: Subscription[] = [];
 
   constructor(private router: Router,
               private shoppingCartService: ShoppingCartService,
@@ -33,6 +32,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   onShowProducts() {
-    this.router.navigate(['products']);
+    this.router.navigate(['products-list']);
   }
 }

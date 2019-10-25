@@ -1,9 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Product } from 'src/app/core/models/product';
 import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
 import { Observable } from 'rxjs';
+import { OrdersService } from 'src/app/core/services/orders.service';
+import { Order } from 'src/app/core/models/order';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -20,6 +23,7 @@ export class ShoppingCartComponent implements OnInit {
   isAsc: boolean;
 
   constructor(private shoppingCartService: ShoppingCartService,
+              private ordersService: OrdersService,
               private router: Router) {
   }
 
@@ -29,8 +33,14 @@ export class ShoppingCartComponent implements OnInit {
     this.totalQuantity$ = this.shoppingCartService.totalQuantity$;
   }
 
-  onOrder(address: ShippingInfo) {
-    console.log('order created');
+  onOrder(address: ShippingInfo, products: Product[]) {
+    this.ordersService.createOrder(new Order(products, address))
+      .pipe(take(1))
+      .subscribe(() => {
+        alert('Order created!');
+        this.shoppingCartService.removeAllProducts();
+        this.onShowProducts();
+      }, err => console.log(err));
   }
 
   onIncrease(product: Product): void {
@@ -46,14 +56,14 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onShowProducts() {
-    this.router.navigate(['products']);
+    this.router.navigate(['products-list']);
   }
 
   onSwitchOrderArgs(newField: OrderType) {
     this.field = newField;
   }
 
-  switchOrderDirection(newDirection: boolean) {
+  onSwitchOrderDirection(newDirection: boolean) {
     this.isAsc = newDirection;
   }
 }

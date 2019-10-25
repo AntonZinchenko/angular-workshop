@@ -13,7 +13,7 @@
                   [field]="field"
                   [isAsc]="isAsc"
                   (switchOrderField)="onSwitchOrderArgs($event)"
-                  (switchOrderDirection)="switchOrderDirection($event)"></app-sort-by-panel>
+                  (switchOrderDirection)="onSwitchOrderDirection($event)"></app-sort-by-panel>
               </div>
               <div class="col-xs-3">
                 <app-continue-button (redirect)="onShowProducts()"></app-continue-button>
@@ -21,10 +21,10 @@
             </div>
           </div>
         </div>
-        <div class="panel-body">
-          <div class="cart-content" *ngIf="(selectedProducts$ | async)?.length as hasRows; else noRows">
+        <div class="panel-body" *ngIf="selectedProducts$ | async as products">
+          <div class="cart-content" *ngIf="products?.length as hasRows; else noRows">
             <app-cart-list
-              [groups]="selectedProducts$ | async | orderBy: field: isAsc"
+              [groups]="products | orderBy: field: isAsc"
               [totalSum]="totalSum$ | async"
               [totalQuantity]="totalQuantity$ | async"
               (increase)="onIncrease($event)"
@@ -33,7 +33,7 @@
             <hr />
             <app-address-form
               [address]="shippingInfo"
-              (order)="onOrder($event)"></app-address-form>
+              (order)="onOrder($event, products)"></app-address-form>
           </div>
           <ng-template #noRows>
             <h3>{{ "cart.empty" | translate }}</h3>

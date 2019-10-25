@@ -1,0 +1,6 @@
+<td align="center">
+  <a class="btn btn-default" (click)="onEdit()"><em class="fa fa-pencil"></em></a>
+  <a class="btn btn-danger" (click)="onDelete()"><em class="fa fa-trash"></em></a>
+</td>
+<td>{{product.title}}</td>
+<td>{{product.desc | slice:0:100}}..</td>

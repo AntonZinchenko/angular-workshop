@@ -5,11 +5,11 @@ import { ProductDetailsComponent, ProductListComponent } from './pages';
 const productsRoutes: Routes = [
     {
         path: '',
-        redirectTo: 'products',
+        redirectTo: 'products-list',
         pathMatch: 'full'
     },
     {
-        path: 'products',
+        path: 'products-list',
         component: ProductListComponent,
     },
     {

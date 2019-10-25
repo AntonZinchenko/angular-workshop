@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row" *ngIf="order">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4 pull-right">
+                    <h4>{{'admin.order.address' | translate}}</h4>
+                    <ul>
+                        <li><strong>{{'admin.order.fields.customer' | translate}}</strong> {{order.shippingInfo.firstName}} {{order.shippingInfo.lastName}}</li>
+                        <li><strong>{{'admin.order.fields.city' | translate}}</strong> {{order.shippingInfo.shippingCity}}</li>
+                        <li><strong>{{'admin.order.fields.address' | translate}}</strong> {{order.shippingInfo.shippingAddress}}</li>
+                        <li><strong>{{'admin.order.fields.date' | translate}}</strong> {{order.created | date}} </li>
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <label class="control-label" for="desc">{{'admin.order.fields.notes' | translate}}</label>
+                    <textarea class="form-control" id="desc" [(ngModel)]="order.notes" placeholder="Notes" rows="4"></textarea>
+                    <label>
+                        <input type="checkbox" name="completed" [(ngModel)]="order.completed">
+                        {{'admin.order.fields.status' | translate}}
+                    </label>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{'admin.order.product.title' | translate}}</th>
+                                <th>{{'admin.order.product.desc' | translate}}</th>
+                                <th>{{'admin.order.product.price' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of order.products">
+                                <td>{{product.title}}</td>
+                                <td>{{product.desc}}</td>
+                                <td>{{product.price | currency:'USD':'symbol'}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-right">
+                                    <strong>{{'admin.order.product.total' | translate}}</strong> {{totalPrice | currency:'USD':'symbol'}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" (click)="onSave(order)" class="btn btn-primary">{{'admin.order.actions.save' | translate}}</button>
+                    <a href="javascript:void(0)" (click)="onGoBack()" class="btn btn-default">{{'admin.order.actions.cancel' | translate}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

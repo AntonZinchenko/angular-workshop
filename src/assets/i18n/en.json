@@ -1,5 +1,86 @@
 {
-  "about":{
+  "admin": {
+    "title": "Administration module",
+    "sections": {
+      "products": "Manage Products",
+      "orders": "Orders"
+    },
+    "products": {
+      "title": "Books",
+      "add": "Create New",
+      "columns": {
+        "title": "Title",
+        "desc": "Description"
+      }
+    },
+    "product": {
+      "fields": {
+        "title": {
+          "name": "Title",
+          "err": "Title is required."
+        },
+        "author": {
+          "name": "Author",
+          "err": "Author is required."
+        },
+        "icon": {
+          "name": "Icon",
+          "err": "Icon is required."
+        },
+        "price": {
+          "name": "Price",
+          "err": "Price is required."
+        },
+        "rating": {
+          "name": "Rating",
+          "err": "Rating is required."
+        },
+        "published": {
+          "name": "Published",
+          "err": "Published is required."
+        },
+        "desc": {
+          "name": "Desc:",
+          "err": "Desc is required."
+        }
+      },
+      "actions": {
+        "save": "Save",
+        "cancel": "Cancel"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "columns": {
+        "customer": "Customer",
+        "address": "Address",
+        "books": "Books",
+        "status": "Status"
+      }
+    },
+    "order": {
+      "address": "Shipping Info:",
+      "fields": {
+        "customer": "Customer:",
+        "city": "City:",
+        "address": "Address:",
+        "date": "Date:",
+        "notes": "Notes:",
+        "status": "Completed"
+      },
+      "product": {
+        "title": "Title",
+        "desc": "Description",
+        "price": "Price",
+        "total": "Total:"
+      },
+      "actions": {
+        "save": "Save",
+        "cancel": "Cancel"
+      }
+    }
+  },
+  "about": {
     "title": "Services and DI",
     "configService": {
       "title": "1. ConfigOptionsService (with LocalStorageService)",
@@ -16,9 +97,16 @@
       "title": "4. Custom click directive"
     }
   },
+  "auth": {
+    "title": "Sign In",
+    "login": "Login"
+  },
   "common": {
     "title": "My ecommerce library",
     "cart": "Cart",
+    "manage": "Manage",
+    "login": "Login",
+    "logout": "Logout",
     "continue": "Continue shopping"
   },
   "products": {

@@ -1,0 +1,13 @@
+<h3>{{'admin.title' | translate}}</h3>
+<nav>
+    <ul class="nav nav-tabs">
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a [routerLink]="['./']">{{'admin.sections.orders' | translate}}</a>
+        </li>
+        <li routerLinkActive="active">
+            <a [routerLink]="['./products']">{{'admin.sections.products' | translate}}</a>
+        </li>
+    </ul>
+</nav>
+
+<router-outlet></router-outlet>
