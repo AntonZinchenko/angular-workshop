@@ -20,7 +20,7 @@ export class AdminOrderDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.pipe(
       switchMap(params => this.ordersService.getOrder(+params.get('id'))))
-        .subscribe(order => this.order = Object.assign({}, order), err => console.log(err));
+        .subscribe(response => this.order = response, err => console.log(err));
   }
 
   onSave(order: Order): void {

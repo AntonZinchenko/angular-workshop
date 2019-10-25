@@ -23,7 +23,7 @@ export class AdminProductDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.pipe(
       switchMap(params => this.productsService.getProduct(+params.get('id'))))
-        .subscribe(product => this.product = Object.assign({}, product), err => console.log(err));
+        .subscribe(response => this.product = response, err => console.log(err));
   }
 
   onSave(model: Product, isValid: boolean): void {
