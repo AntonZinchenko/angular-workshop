@@ -21,7 +21,7 @@
             </div>
           </div>
         </div>
-        <div class="panel-body" *ngIf="selectedProducts$ | async as products">
+        <div class="panel-body">
           <div class="cart-content" *ngIf="products?.length as hasRows; else noRows">
             <app-cart-list
               [groups]="products | orderBy: field: isAsc"

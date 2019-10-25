@@ -1,14 +1,14 @@
 import { Component, Optional, InjectionToken, Inject } from '@angular/core';
-import { GeneratorService } from 'src/app/core/services/generator';
+import { GeneratorService, GeneratorFactory } from 'src/app/core/services/generator';
 import { ConstantsService } from 'src/app/core/services/constant.service';
 import { ConfigOptionsService } from 'src/app/core/services/config-options.service';
 import { ConfigEnity } from 'src/app/core/models/config';
 
-const CONSTANTS_TOKEN = new InjectionToken('constantsService');
+const AppConstants = new InjectionToken('constantsService');
+const SeqLength = new InjectionToken('n');
+const SeqResult = new InjectionToken('seqResult');
 
 const SEQUENCE_LENGTH = 10;
-const SeqLength = new InjectionToken('n');
-export const GeneratorFactory = (n: number) => new GeneratorService(n);
 
 @Component({
   selector: 'app-about',
@@ -16,21 +16,20 @@ export const GeneratorFactory = (n: number) => new GeneratorService(n);
   styleUrls: ['./about.component.css'],
   providers: [
     ConfigOptionsService,
-    { provide: CONSTANTS_TOKEN, useValue: ConstantsService },
+    GeneratorService,
+    { provide: AppConstants, useValue: ConstantsService },
     { provide: SeqLength, useValue: SEQUENCE_LENGTH },
-    { provide: GeneratorService, useFactory: GeneratorFactory, deps: [SeqLength] }
+    { provide: SeqResult, useFactory: GeneratorFactory, deps: [GeneratorService, SeqLength] }
   ]
 })
 export class AboutComponent {
-  lengthFromService: number;
   randomSequence: string[];
-
   constTitle: string;
   configInstance: ConfigEnity;
 
   constructor( @Optional() private configOptionsService: ConfigOptionsService,
-               @Optional() @Inject(CONSTANTS_TOKEN) private constantsService: any,
-               @Optional() private seqService: GeneratorService) {
+               @Optional() @Inject(AppConstants) private constantsService: any,
+               @Optional() @Inject(SeqResult) private sequence: string[]) {
 
     this.refreshStorageInfo();
 
@@ -38,10 +37,7 @@ export class AboutComponent {
       this.constTitle = `App: ${constantsService.App}, Ver: ${constantsService.Ver}`;
     }
 
-    if (seqService) {
-      this.lengthFromService = seqService.length;
-      this.randomSequence = seqService.randomSequence();
-    }
+    this.randomSequence = (sequence) ? sequence : [];
   }
 
   private refreshStorageInfo() {

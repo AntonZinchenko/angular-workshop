@@ -13,7 +13,7 @@
 <h2>{{ 'about.constantsService.title' | translate }}</h2>
 <span>{{constTitle}}</span>
 
-<h2>{{'about.generatorService.title' | translate:{ length: lengthFromService } }}</h2>
+<h2>{{'about.generatorService.title' | translate:{ length: randomSequence.length } }}</h2>
 [<span *ngFor="let item of randomSequence; let isLast=last">{{item}}{{isLast ? '' : ', '}}</span>]
 
 <h2>{{ 'about.directive.title' | translate }}</h2>

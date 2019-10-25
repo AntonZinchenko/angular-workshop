@@ -1,26 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Product } from 'src/app/core/models/product';
 import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { OrdersService } from 'src/app/core/services/orders.service';
 import { Order } from 'src/app/core/models/order';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.scss']
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
 
-  selectedProducts$: Observable<Product[]>;
+  products: Product[];
   totalSum$: Observable<number>;
   totalQuantity$: Observable<number>;
   shippingInfo: ShippingInfo = new ShippingInfo();
   field: OrderType = OrderType.Quantity;
   isAsc: boolean;
+
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private shoppingCartService: ShoppingCartService,
               private ordersService: OrdersService,
@@ -28,9 +30,18 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.selectedProducts$ = this.shoppingCartService.productsInCart$;
+    this.shoppingCartService.productsInCart$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        response => this.products = response,
+        err => console.log(err));
     this.totalSum$ = this.shoppingCartService.totalSum$;
     this.totalQuantity$ = this.shoppingCartService.totalQuantity$;
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   onOrder(address: ShippingInfo, products: Product[]) {

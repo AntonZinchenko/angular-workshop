@@ -6,36 +6,35 @@ import { AdminComponent } from './admin.component';
 import * as page from './pages';
 
 const adminRoutes: Routes = [
-    {
+  {
+    path: '',
+    component: AdminComponent,
+    canActivateChild: [AuthGuard],
+    canActivate: [AuthGuard],
+    children: [
+      {
         path: '',
-        component: AdminComponent,
-        canActivateChild: [AuthGuard],
-        canActivate: [AuthGuard],
         children: [
-            {
-                path: '',
-                children: [
-                    { path: 'products', component: page.AdminProductsComponent },
-                    { path: 'products/add', component: page.AdminProductDetailsComponent },
-                    { path: 'products/edit/:id', component: page.AdminProductDetailsComponent },
-                    { path: 'order/add', component: page.AdminOrderDetailsComponent },
-                    { path: 'order/edit/:id', component: page.AdminOrderDetailsComponent },
-                    { path: '', component: page.AdminOrdersComponent }
-                ]
-            }
+          { path: 'products', component: page.AdminProductsComponent },
+          { path: 'products/add', component: page.AdminProductDetailsComponent },
+          { path: 'products/edit/:id', component: page.AdminProductDetailsComponent },
+          { path: 'order/edit/:id', component: page.AdminOrderDetailsComponent },
+          { path: '', component: page.AdminOrdersComponent }
         ]
-    }
+      }
+    ]
+  }
 ];
 export let adminRouterComponents = [
-    AdminComponent,
-    page.AdminOrdersComponent,
-    page.AdminOrderDetailsComponent,
-    page.AdminProductsComponent,
-    page.AdminProductDetailsComponent
+  AdminComponent,
+  page.AdminOrdersComponent,
+  page.AdminOrderDetailsComponent,
+  page.AdminProductsComponent,
+  page.AdminProductDetailsComponent
 ];
 @NgModule({
-    imports: [
-        RouterModule.forChild(adminRoutes)
-    ]
+  imports: [
+    RouterModule.forChild(adminRoutes)
+  ]
 })
 export class AdminRoutingModule { }

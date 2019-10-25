@@ -7,6 +7,7 @@ import { SortByPanelComponent } from './components/sort-by-panel/sort-by-panel.c
 import { SelectedItemDirective } from './directives/selected-item.directive';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToStarsPipe } from './pipes/stars.pipe';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContinueButtonComponent,
     SortByPanelComponent,
     SelectedItemDirective,
-    OrderByPipe
+    OrderByPipe,
+    ToStarsPipe
   ],
   exports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContinueButtonComponent,
     SortByPanelComponent,
     SelectedItemDirective,
-    OrderByPipe
+    OrderByPipe,
+    ToStarsPipe
   ]
 })
 export class SharedModule { }
