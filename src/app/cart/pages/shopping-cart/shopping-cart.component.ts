@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Product } from 'src/app/core/models/product';
 import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
 import { Observable, Subject } from 'rxjs';
 import { OrdersService } from 'src/app/core/services/orders.service';
 import { Order } from 'src/app/core/models/order';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { State, getCartProducts, getCartTotalQuantity, getCartTotalSum } from 'src/app/reducers';
+import * as actions from 'src/app/actions/cart.actions';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -24,19 +26,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private shoppingCartService: ShoppingCartService,
-              private ordersService: OrdersService,
+  constructor(private ordersService: OrdersService,
+              private store: Store<State>,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.shoppingCartService.productsInCart$
+    this.store.select(getCartProducts)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        response => this.products = response,
-        err => console.log(err));
-    this.totalSum$ = this.shoppingCartService.totalSum$;
-    this.totalQuantity$ = this.shoppingCartService.totalQuantity$;
+      .subscribe(response => this.products = response, err => console.log(err));
+    this.totalSum$ = this.store.select(getCartTotalSum);
+    this.totalQuantity$ = this.store.select(getCartTotalQuantity);
   }
 
   ngOnDestroy() {
@@ -49,21 +49,21 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(() => {
         alert('Order created!');
-        this.shoppingCartService.removeAllProducts();
+        this.store.dispatch(actions.clearCart);
         this.onShowProducts();
       }, err => console.log(err));
   }
 
   onIncrease(product: Product): void {
-    this.shoppingCartService.increaseQuantity(product);
+    this.store.dispatch(actions.increaseQuantity({product}));
   }
 
   onDecrease(product: Product): void {
-    this.shoppingCartService.decreaseQuantity(product);
+    this.store.dispatch(actions.decreaseQuantity({product}));
   }
 
   onRemoveProduct(product: Product): void {
-    this.shoppingCartService.removeProduct(product);
+    this.store.dispatch(actions.removeProduct({product}));
   }
 
   onShowProducts() {

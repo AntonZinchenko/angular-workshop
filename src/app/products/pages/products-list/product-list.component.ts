@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
-import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
-import { ProductsService } from '../../services/products.service';
+import { Store } from '@ngrx/store';
+import { State, getProducts } from 'src/app/reducers';
+import { addProduct } from 'src/app/actions/cart.actions';
+import { loadProducts } from 'src/app/actions/products.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -12,16 +14,16 @@ import { ProductsService } from '../../services/products.service';
 export class ProductListComponent implements OnInit {
   products$: Observable<Product[]>;
 
-  constructor(private productsService: ProductsService,
-              private shoppingCartService: ShoppingCartService,
+  constructor(private store: Store<State>,
               private router: Router) { }
 
   ngOnInit() {
-    this.products$ = this.productsService.getProducts();
+    this.products$ = this.store.select(getProducts);
+    this.store.dispatch(loadProducts());
   }
 
   onBuy(product: Product) {
-    this.shoppingCartService.addProduct(product);
+    this.store.dispatch(addProduct({product}));
   }
 
   onShowDetails(productId: number) {

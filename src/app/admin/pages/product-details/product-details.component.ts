@@ -1,29 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
-import { ProductsService } from 'src/app/products/services/products.service';
-import { Subscription } from 'rxjs';
-import { switchMap, take } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { State, selectCurrentProduct } from 'src/app/reducers';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { addProduct, updateProduct } from 'src/app/actions/products.actions';
 
 @Component({
   selector: 'app-admin-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.css']
 })
-export class AdminProductDetailsComponent implements OnInit {
+export class AdminProductDetailsComponent implements OnInit, OnDestroy {
   product: Product;
-  private subscriptions: Subscription = new Subscription();
+  private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private productsService: ProductsService,
+  constructor(private store: Store<State>,
               private router: Router,
               private route: ActivatedRoute) {
     this.product = {} as Product;
   }
 
   ngOnInit() {
-    this.route.paramMap.pipe(
-      switchMap(params => this.productsService.getProduct(+params.get('id'))))
-        .subscribe(response => this.product = response, err => console.log(err));
+    this.store.select(selectCurrentProduct)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(response => this.product = response, err => console.log(err));
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   onSave(model: Product, isValid: boolean): void {
@@ -31,12 +38,11 @@ export class AdminProductDetailsComponent implements OnInit {
       return;
     }
 
-    const actionResult = (!model.id)
-      ? this.productsService.createProduct(model)
-      : this.productsService.updateProduct(model);
-
-    actionResult.pipe(take(1))
-      .subscribe(() => this.onGoBack(), err => console.log(err));
+    if (!model.id) {
+      this.store.dispatch(addProduct({product: model}));
+    } else {
+      this.store.dispatch(updateProduct({product: model}));
+    }
   }
 
   onGoBack(): void {

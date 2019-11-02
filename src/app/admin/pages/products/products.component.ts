@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
-import { ProductsService } from 'src/app/products/services/products.service';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { State, getProducts } from 'src/app/reducers';
+import { deleteProduct } from 'src/app/actions/products.actions';
 
 @Component({
   selector: 'app-admin-products',
@@ -13,11 +14,11 @@ import { switchMap } from 'rxjs/operators';
 export class AdminProductsComponent implements OnInit {
   products$: Observable<Product[]>;
 
-  constructor(private productsService: ProductsService,
+  constructor(private store: Store<State>,
               private router: Router) { }
 
   ngOnInit() {
-    this.products$ = this.productsService.getProducts();
+    this.products$ = this.store.select(getProducts);
   }
 
   onAddNew(): void {
@@ -30,8 +31,7 @@ export class AdminProductsComponent implements OnInit {
 
   onDeleteItem(product: Product): void {
     if (confirm(`Are you sure to delete ${product.title}?`)) {
-      this.products$ = this.productsService.deleteProduct(product)
-        .pipe(switchMap(() => this.productsService.getProducts()));
+      this.store.dispatch(deleteProduct(({product})));
     }
   }
 }

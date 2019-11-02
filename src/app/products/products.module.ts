@@ -13,6 +13,8 @@ import { ProductComponent } from './components/product/product.component';
     productsRouterComponents,
     ProductComponent
   ],
-  providers: [ProductsService]
+  providers: [
+    ProductsService
+  ]
 })
 export class ProductsModule { }
