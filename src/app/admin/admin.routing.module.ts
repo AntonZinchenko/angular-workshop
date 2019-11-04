@@ -9,8 +9,9 @@ const adminRoutes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    canActivateChild: [AuthGuard],
+    // логичнее в таком порядке canActivate, canActivateChild
     canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
@@ -25,6 +26,7 @@ const adminRoutes: Routes = [
     ]
   }
 ];
+// показывал вам еще вариант использовать статическое свойство текущего класса.
 export let adminRouterComponents = [
   AdminComponent,
   page.AdminOrdersComponent,
@@ -37,4 +39,5 @@ export let adminRouterComponents = [
     RouterModule.forChild(adminRoutes)
   ]
 })
+// Название файла через дефис.
 export class AdminRoutingModule { }

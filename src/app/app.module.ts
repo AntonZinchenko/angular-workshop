@@ -37,7 +37,7 @@ import { LoginComponent } from './pages/login/login.component';
         deps: [HttpClient]
       }
     }),
-    AppRoutingModule,
+    AppRoutingModule, // желательно, чтобы был последний в списке, помните о '**'
     CartModule,
     ProductsModule
   ],

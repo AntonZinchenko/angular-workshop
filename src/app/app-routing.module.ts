@@ -13,10 +13,12 @@ const routes: Routes = [
   },
   {
     path: '',
+    // можно уже поменять на выражения для динамического импорта
     loadChildren: './products/products.module#ProductsModule'
   },
   {
     path: 'cart',
+    // можно уже поменять на выражения для динамического импорта
     loadChildren: './cart/cart.module#CartModule',
     pathMatch: 'full'
   },
@@ -26,6 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    // можно уже поменять на выражения для динамического импорта
     canLoad: [AuthGuard],
     loadChildren: './admin/admin.module#AdminModule'
   },
