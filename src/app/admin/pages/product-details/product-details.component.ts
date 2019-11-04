@@ -14,16 +14,24 @@ export class AdminProductDetailsComponent implements OnInit {
   product: Product;
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private productsService: ProductsService,
-              private router: Router,
-              private route: ActivatedRoute) {
-    this.product = {} as Product;
+  constructor(
+    private productsService: ProductsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.product = {} as Product; // можно выше это сделать, во время объявления свойства
   }
 
   ngOnInit() {
-    this.route.paramMap.pipe(
-      switchMap(params => this.productsService.getProduct(+params.get('id'))))
-        .subscribe(response => this.product = response, err => console.log(err));
+    this.route.paramMap
+      .pipe(
+        switchMap(params => this.productsService.getProduct(+params.get('id')))
+      )
+      // https://github.com/ReactiveX/rxjs/issues/4159
+      .subscribe(
+        response => (this.product = response),
+        err => console.log(err)
+      );
   }
 
   onSave(model: Product, isValid: boolean): void {
@@ -31,11 +39,12 @@ export class AdminProductDetailsComponent implements OnInit {
       return;
     }
 
-    const actionResult = (!model.id)
+    const actionResult = !model.id
       ? this.productsService.createProduct(model)
       : this.productsService.updateProduct(model);
 
-    actionResult.pipe(take(1))
+    actionResult
+      .pipe(take(1))
       .subscribe(() => this.onGoBack(), err => console.log(err));
   }
 

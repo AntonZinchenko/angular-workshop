@@ -6,6 +6,6 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartListFooterComponent {
-  @Input() totalSum: number;
+  @Input() totalSum: number; // можно попробовать применить такой тип, как tuple [number, number]
   @Input() totalQuantity: number;
 }

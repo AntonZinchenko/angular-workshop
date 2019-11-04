@@ -8,6 +8,8 @@ import { OrdersService } from 'src/app/core/services/orders.service';
 import { Order } from 'src/app/core/models/order';
 import { take, takeUntil } from 'rxjs/operators';
 
+// Мне понравилась идея выделения компонентов-страниц в отдельную папку.
+
 @Component({
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
@@ -40,7 +42,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsubscribe.next();
+    this.unsubscribe.next(); // согласно документации по takeUntil(), next() необязательно выполнять
     this.unsubscribe.complete();
   }
 

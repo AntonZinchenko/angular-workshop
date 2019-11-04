@@ -27,4 +27,5 @@ export let productsRouterComponents = [
     imports: [RouterModule.forChild(productsRoutes)],
     exports: [RouterModule]
 })
+// Название модуля через дефис: products-routing.module.ts
 export class ProductsRoutingModule { }

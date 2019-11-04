@@ -9,30 +9,24 @@ import { OrderByPipe } from './pipes/order-by.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToStarsPipe } from './pipes/stars.pipe';
 
+const compDirPipe = [
+  ContinueButtonComponent,
+  SortByPanelComponent,
+  SelectedItemDirective,
+  OrderByPipe,
+  ToStarsPipe
+];
+
+const modules = [
+  CommonModule,
+  TranslateModule,
+  HttpClientModule,
+  ReactiveFormsModule
+];
+
 @NgModule({
-  imports: [
-    CommonModule,
-    TranslateModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-  ],
-  declarations: [
-    ContinueButtonComponent,
-    SortByPanelComponent,
-    SelectedItemDirective,
-    OrderByPipe,
-    ToStarsPipe
-  ],
-  exports: [
-    CommonModule,
-    TranslateModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    ContinueButtonComponent,
-    SortByPanelComponent,
-    SelectedItemDirective,
-    OrderByPipe,
-    ToStarsPipe
-  ]
+  imports: [...modules],
+  declarations: [...compDirPipe],
+  exports: [...modules, ...compDirPipe]
 })
-export class SharedModule { }
+export class SharedModule {}
