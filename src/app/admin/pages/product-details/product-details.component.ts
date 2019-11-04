@@ -2,10 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
 import { Store } from '@ngrx/store';
-import { State, selectCurrentProduct } from 'src/app/reducers';
+import { State, selectCurrentProduct } from 'src/app/+store/reducers';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { addProduct, updateProduct } from 'src/app/actions/products.actions';
+import { addProduct, updateProduct } from 'src/app/+store/actions/products.actions';
 
 @Component({
   selector: 'app-admin-product-details',

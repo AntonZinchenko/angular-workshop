@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
-import { State, selectCurrentProduct } from 'src/app/reducers';
+import { State, selectCurrentProduct } from 'src/app/+store/reducers';
 import { Store } from '@ngrx/store';
-import { addProduct } from 'src/app/actions/cart.actions';
+import { addProduct } from 'src/app/+store/actions/cart.actions';
 
 @Component({
   selector: 'app-product-details',

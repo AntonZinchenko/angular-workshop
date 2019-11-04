@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, getProducts } from 'src/app/reducers';
-import { deleteProduct } from 'src/app/actions/products.actions';
+import { State, getProducts } from 'src/app/+store/reducers';
+import { deleteProduct } from 'src/app/+store/actions/products.actions';
 
 @Component({
   selector: 'app-admin-products',

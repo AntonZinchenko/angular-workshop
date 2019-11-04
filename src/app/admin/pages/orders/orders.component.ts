@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order } from 'src/app/core/models/order';
 import { Observable } from 'rxjs';
-import { deleteOrder } from 'src/app/actions/orders.actions';
-import { getOrders, State } from 'src/app/reducers';
+import { deleteOrder } from 'src/app/+store/actions/orders.actions';
+import { getOrders, State } from 'src/app/+store/reducers';
 import { Store } from '@ngrx/store';
 
 @Component({

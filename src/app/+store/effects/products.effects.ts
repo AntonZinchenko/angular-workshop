@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import * as actions from '../actions/products.actions';
-import { ProductsService } from '../products/services/products.service';
+import { ProductsService } from '../../products/services/products.service';
 import { Router } from '@angular/router';
 
 @Injectable()

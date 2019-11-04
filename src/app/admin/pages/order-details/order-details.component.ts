@@ -4,8 +4,8 @@ import { Order } from 'src/app/core/models/order';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, selectCurrentOrder } from 'src/app/reducers';
-import { addOrder, updateOrder } from 'src/app/actions/orders.actions';
+import { State, selectCurrentOrder } from 'src/app/+store/reducers';
+import { addOrder, updateOrder } from 'src/app/+store/actions/orders.actions';
 
 @Component({
   selector: 'app-admin-order-details',

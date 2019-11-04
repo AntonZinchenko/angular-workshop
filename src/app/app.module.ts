@@ -19,14 +19,16 @@ import { AuthService } from './core/services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './pages/login/login.component';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import { reducers, metaReducers } from './+store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import { ProductsEffects } from './effects/products.effects';
+import { ProductsEffects } from './+store/effects/products.effects';
 import { ProductsService } from './products/services/products.service';
-import { OrdersEffects } from './effects/orders.effects';
+import { OrdersEffects } from './+store/effects/orders.effects';
+import { ProductsPreloadGuard } from './guards/products-preload.guard';
+import { OrdersPreloadGuard } from './guards/orders-preload.guard';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { OrdersEffects } from './effects/orders.effects';
     ProductsService, // удалить!!!
     OrdersService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    ProductsPreloadGuard,
+    OrdersPreloadGuard
   ],
   bootstrap: [AppComponent]
 })

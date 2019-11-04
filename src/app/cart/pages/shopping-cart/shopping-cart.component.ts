@@ -7,8 +7,8 @@ import { OrdersService } from 'src/app/core/services/orders.service';
 import { Order } from 'src/app/core/models/order';
 import { take, takeUntil, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { State, getCartProducts, getCartTotalQuantity, getCartTotalSum } from 'src/app/reducers';
-import * as actions from 'src/app/actions/cart.actions';
+import { State, getCartProducts, getCartTotalQuantity, getCartTotalSum } from 'src/app/+store/reducers';
+import * as actions from 'src/app/+store/actions/cart.actions';
 
 @Component({
   selector: 'app-shopping-cart',

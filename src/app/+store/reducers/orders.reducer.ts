@@ -1,7 +1,7 @@
 import { createReducer, Action, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Order } from '../core/models/order';
 import * as orderActions from '../actions/orders.actions';
+import { Order } from '../../core/models/order';
 
 export const adapter: EntityAdapter<Order> = createEntityAdapter<Order>();
 

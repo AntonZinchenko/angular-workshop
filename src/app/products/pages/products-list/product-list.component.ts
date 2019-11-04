@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
 import { Store } from '@ngrx/store';
-import { State, getProducts } from 'src/app/reducers';
-import { addProduct } from 'src/app/actions/cart.actions';
-import { loadProducts } from 'src/app/actions/products.actions';
+import { State, getProducts } from 'src/app/+store/reducers';
+import { addProduct } from 'src/app/+store/actions/cart.actions';
+import { loadProducts } from 'src/app/+store/actions/products.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +19,6 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {
     this.products$ = this.store.select(getProducts);
-    this.store.dispatch(loadProducts());
   }
 
   onBuy(product: Product) {

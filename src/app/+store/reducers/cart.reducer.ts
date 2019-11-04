@@ -1,7 +1,7 @@
 import { createReducer, Action, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Product } from '../core/models/product';
 import * as cartActions from '../actions/cart.actions';
+import { Product } from '../../core/models/product';
 
 export const adapter: EntityAdapter<Product> = createEntityAdapter<Product>({
   selectId: product => `${product.id}-${new Date().getTime()}`

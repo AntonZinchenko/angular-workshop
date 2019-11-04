@@ -4,7 +4,7 @@ import {
   MetaReducer,
   createFeatureSelector
 } from '@ngrx/store';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import * as fromCart from './cart.reducer';
 import * as fromProducts from './products.reducer';
 import * as fromOrders from './orders.reducer';

@@ -4,6 +4,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { AboutComponent } from './pages/about/about.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './pages/login/login.component';
+import { ProductsPreloadGuard } from './guards/products-preload.guard';
+import { OrdersPreloadGuard } from './guards/orders-preload.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +15,8 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: './products/products.module#ProductsModule'
+    loadChildren: './products/products.module#ProductsModule',
+    canActivate: [ProductsPreloadGuard]
   },
   {
     path: 'cart',
@@ -27,7 +30,11 @@ const routes: Routes = [
   {
     path: 'admin',
     canLoad: [AuthGuard],
-    loadChildren: './admin/admin.module#AdminModule'
+    loadChildren: './admin/admin.module#AdminModule',
+    canActivate: [
+      ProductsPreloadGuard,
+      OrdersPreloadGuard
+    ]
   },
   {
       path: '**',

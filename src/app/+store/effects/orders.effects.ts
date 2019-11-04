@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import * as actions from '../actions/orders.actions';
 import { Router } from '@angular/router';
-import { OrdersService } from '../core/services/orders.service';
+import { OrdersService } from '../../core/services/orders.service';
 
 @Injectable()
 export class OrdersEffects {
