@@ -10,7 +10,7 @@ import { CartModule } from './cart/cart.module';
 import { ProductsModule } from './products/products.module';
 import { ShoppingCartService } from './core/services/shopping-cart.service';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AboutComponent } from './pages/about/about.component';
 import { ClickDirective } from './shared/directives/click.directive';
 import { LocalStorageService } from './core/services/local-storage.service';
@@ -18,6 +18,8 @@ import { OrdersService } from './core/services/orders.service';
 import { AuthService } from './core/services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './pages/login/login.component';
+import { TimingInterceptor } from './core/interceptors/timing.interceptor';
+import { AppSettings } from './core/services/app-settings.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,12 @@ import { LoginComponent } from './pages/login/login.component';
   ],
   providers: [
     LocalStorageService,
+    AppSettings,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TimingInterceptor,
+      multi: true
+    },
     ShoppingCartService,
     OrdersService,
     AuthService,

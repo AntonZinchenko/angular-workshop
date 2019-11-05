@@ -5,3 +5,10 @@ export class ConfigEnity {
     public email: string
 ) { }
 }
+
+export class AppSettingEnity {
+  constructor(
+    public title: string,
+    public version: string
+) { }
+}

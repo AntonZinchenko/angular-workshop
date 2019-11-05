@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './core/services/auth.service';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { AppSettings } from './core/services/app-settings.service';
 
 @Component({
   selector: 'app-root',
@@ -13,16 +14,19 @@ export class AppComponent implements AfterViewInit {
 
   constructor(private translate: TranslateService,
               private authService: AuthService,
+              private appSettings: AppSettings,
               private renderer: Renderer2,
               private router: Router) {
     translate.setDefaultLang('en');
   }
 
   ngAfterViewInit() {
-    this.translate.get('common.title')
+    this.appSettings.data$
       .pipe(take(1))
-      .subscribe(translation => {
-        this.renderer.setProperty(this.appTitle.nativeElement, 'innerHTML', translation);
+      .subscribe(settings => {
+        this.renderer.setProperty(this.appTitle.nativeElement,
+          'innerHTML',
+          `${settings.title} ${settings.version}`);
       });
   }
 
