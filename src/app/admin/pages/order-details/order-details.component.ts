@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { State, selectCurrentOrder } from 'src/app/+store/reducers';
 import { addOrder, updateOrder } from 'src/app/+store/actions/orders.actions';
+import { ShippingInfo } from 'src/app/core/models/shipping-info';
 
 @Component({
   selector: 'app-admin-order-details',
@@ -19,12 +20,13 @@ export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<State>,
               private router: Router,
               private route: ActivatedRoute) {
+    this.order = {} as Order;
   }
 
   ngOnInit() {
     this.store.select(selectCurrentOrder)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(response => this.order = response, err => console.log(err));
+      .subscribe(response => this.order = Object.assign({}, response), err => console.log(err));
   }
 
   ngOnDestroy() {
@@ -33,14 +35,14 @@ export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSave(model: Order): void {
-    if (!model.id) {
-      this.store.dispatch(addOrder({order: model}));
-    } else {
-      this.store.dispatch(updateOrder({order: model}));
-    }
+    this.store.dispatch(updateOrder({order: model}));
   }
 
   get totalPrice() {
+    if (!this.order) {
+      return 0;
+    }
+
     return this.order.products.reduce((sum, current) => sum + current.price, 0);
   }
 

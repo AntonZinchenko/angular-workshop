@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Product } from '../../core/models/product';
+import { ActivatedRoute } from '@angular/router';
 
 export const loadProducts = createAction('[Products] Load products');
 export const productsLoaded = createAction('[Products] Products loaded', props<{products: Product[]}>());

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import * as actions from '../actions/orders.actions';
 import { Router } from '@angular/router';
 import { OrdersService } from '../../core/services/orders.service';
@@ -34,6 +34,12 @@ export class OrdersEffects {
         catchError((error) => of(actions.orderUpdateFailed({error})))
       ))
     ));
+
+  orderUpdated$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.orderUpdated),
+    tap(() => this.router.navigate(['admin']))),
+    { dispatch: false }
+  );
 
   deleteOrder$ = createEffect(() => this.actions$.pipe(
     ofType(actions.deleteOrder),

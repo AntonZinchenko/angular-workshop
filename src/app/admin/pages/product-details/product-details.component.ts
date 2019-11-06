@@ -25,7 +25,7 @@ export class AdminProductDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.store.select(selectCurrentProduct)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(response => this.product = response, err => console.log(err));
+      .subscribe(response => this.product = Object.assign({}, response), err => console.log(err));
   }
 
   ngOnDestroy() {

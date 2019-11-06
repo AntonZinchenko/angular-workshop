@@ -49,7 +49,7 @@ export const getProducts = createSelector(getProductsState, fromProducts.selectA
 export const selectCurrentProduct = createSelector(
   getProducts,
   selectRouteParameters,
-  (products, route) => products[(+route.id)]
+  (products, route) => products.find(p => p.id === +route.id)
 );
 
 export const getOrdersState = createFeatureSelector<fromOrders.OrdersState>('orders');
@@ -58,5 +58,5 @@ export const getOrders = createSelector(getOrdersState, fromOrders.selectAll);
 export const selectCurrentOrder = createSelector(
   getOrders,
   selectRouteParameters,
-  (orders, route) => orders[(+route.id)]
+  (orders, route) => orders.find(o => o.id === +route.id)
 );
