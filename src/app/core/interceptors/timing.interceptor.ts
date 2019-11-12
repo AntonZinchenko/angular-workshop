@@ -6,6 +6,7 @@ import { tap, finalize } from 'rxjs/operators';
 @Injectable()
 export class TimingInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Добавьте фильтр, чтобы время подсчитыалось только для конкретных запросов.
     const started = Date.now();
     let ok: string;
 
