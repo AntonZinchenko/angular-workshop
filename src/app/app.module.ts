@@ -10,7 +10,7 @@ import { CartModule } from './cart/cart.module';
 import { ProductsModule } from './products/products.module';
 import { ShoppingCartService } from './core/services/shopping-cart.service';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AboutComponent } from './pages/about/about.component';
 import { ClickDirective } from './shared/directives/click.directive';
 import { LocalStorageService } from './core/services/local-storage.service';
@@ -25,10 +25,11 @@ import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { ProductsEffects } from './+store/effects/products.effects';
-import { ProductsService } from './products/services/products.service';
 import { OrdersEffects } from './+store/effects/orders.effects';
 import { ProductsPreloadGuard } from './guards/products-preload.guard';
 import { OrdersPreloadGuard } from './guards/orders-preload.guard';
+import { TimingInterceptor } from './core/interceptors/timing.interceptor';
+import { AppSettings } from './core/services/app-settings.service';
 
 @NgModule({
   declarations: [
@@ -67,8 +68,13 @@ import { OrdersPreloadGuard } from './guards/orders-preload.guard';
   ],
   providers: [
     LocalStorageService,
+    AppSettings,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TimingInterceptor,
+      multi: true
+    },
     ShoppingCartService,
-    ProductsService, // удалить!!!
     OrdersService,
     AuthService,
     AuthGuard,

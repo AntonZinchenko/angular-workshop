@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
-import { State, selectCurrentProduct } from 'src/app/+store/reducers';
+import { State, getProductByUrl } from 'src/app/+store/reducers';
 import { Store } from '@ngrx/store';
 import { addProduct } from 'src/app/+store/actions/cart.actions';
 
@@ -19,7 +19,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.product$ = this.store.select(selectCurrentProduct);
+    this.product$ = this.store.select(getProductByUrl);
   }
 
   onBuy(product: Product): void {

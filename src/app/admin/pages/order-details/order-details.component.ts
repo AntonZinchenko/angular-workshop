@@ -4,9 +4,8 @@ import { Order } from 'src/app/core/models/order';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { State, selectCurrentOrder } from 'src/app/+store/reducers';
-import { addOrder, updateOrder } from 'src/app/+store/actions/orders.actions';
-import { ShippingInfo } from 'src/app/core/models/shipping-info';
+import { State, getOrderByUrl } from 'src/app/+store/reducers';
+import { updateOrder } from 'src/app/+store/actions/orders.actions';
 
 @Component({
   selector: 'app-admin-order-details',
@@ -24,7 +23,7 @@ export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(selectCurrentOrder)
+    this.store.select(getOrderByUrl)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.order = Object.assign({}, response), err => console.log(err));
   }

@@ -46,7 +46,7 @@ export const getCartTotalSum = createSelector(getCartProducts,
 export const getProductsState = createFeatureSelector<fromProducts.ProductsState>('products');
 export const getProducts = createSelector(getProductsState, fromProducts.selectAll);
 
-export const selectCurrentProduct = createSelector(
+export const getProductByUrl = createSelector(
   getProducts,
   selectRouteParameters,
   (products, route) => products.find(p => p.id === +route.id)
@@ -55,7 +55,7 @@ export const selectCurrentProduct = createSelector(
 export const getOrdersState = createFeatureSelector<fromOrders.OrdersState>('orders');
 export const getOrders = createSelector(getOrdersState, fromOrders.selectAll);
 
-export const selectCurrentOrder = createSelector(
+export const getOrderByUrl = createSelector(
   getOrders,
   selectRouteParameters,
   (orders, route) => orders.find(o => o.id === +route.id)

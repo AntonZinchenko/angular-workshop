@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
 import { Store } from '@ngrx/store';
-import { State, selectCurrentProduct } from 'src/app/+store/reducers';
+import { State, getProductByUrl } from 'src/app/+store/reducers';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { addProduct, updateProduct } from 'src/app/+store/actions/products.actions';
@@ -23,7 +23,7 @@ export class AdminProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(selectCurrentProduct)
+    this.store.select(getProductByUrl)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.product = Object.assign({}, response), err => console.log(err));
   }
