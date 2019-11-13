@@ -3,12 +3,10 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
 import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
 import { Observable, Subject } from 'rxjs';
-import { OrdersService } from 'src/app/core/services/orders.service';
+import { takeUntil } from 'rxjs/operators';
+import { CartFacadeService } from 'src/app/+store/facades/cart-facade.service';
+import { OrdersFacadeService } from 'src/app/+store/facades/orders-facade.service';
 import { Order } from 'src/app/core/models/order';
-import { take, takeUntil, map } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { State, getCartProducts, getCartTotalQuantity, getCartTotalSum } from 'src/app/+store/reducers';
-import * as actions from 'src/app/+store/actions/cart.actions';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -26,17 +24,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private ordersService: OrdersService,
-              private store: Store<State>,
+  constructor(private cart: CartFacadeService,
+              private orders: OrdersFacadeService,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.store.select(getCartProducts)
+    this.cart.selectedProducts$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.products = response, err => console.log(err));
-    this.totalSum$ = this.store.select(getCartTotalSum);
-    this.totalQuantity$ = this.store.select(getCartTotalQuantity);
+    this.totalSum$ = this.cart.totalSum$;
+    this.totalQuantity$ = this.cart.totalQuantity$;
   }
 
   ngOnDestroy() {
@@ -45,6 +43,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   onOrder(address: ShippingInfo, products: Product[]) {
+    this.orders.createOrder(new Order(products, address));
+    /*
     this.ordersService.createOrder(new Order(products, address))
       .pipe(take(1))
       .subscribe(() => {
@@ -52,18 +52,19 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.store.dispatch(actions.clearCart);
         this.onShowProducts();
       }, err => console.log(err));
+      */
   }
 
   onIncrease(product: Product): void {
-    this.store.dispatch(actions.increaseQuantity({product}));
+    this.cart.increaseQuantity(product);
   }
 
   onDecrease(product: Product): void {
-    this.store.dispatch(actions.decreaseQuantity({product}));
+    this.cart.decreaseQuantity(product);
   }
 
   onRemoveProduct(product: Product): void {
-    this.store.dispatch(actions.removeProduct({product}));
+    this.cart.removeProduct(product);
   }
 
   onShowProducts() {

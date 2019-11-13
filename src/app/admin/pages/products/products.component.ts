@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { State, getProducts } from 'src/app/+store/reducers';
-import { deleteProduct } from 'src/app/+store/actions/products.actions';
+import { ProductsFacadeService } from 'src/app/+store/facades/products-facade.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -14,11 +12,11 @@ import { deleteProduct } from 'src/app/+store/actions/products.actions';
 export class AdminProductsComponent implements OnInit {
   products$: Observable<Product[]>;
 
-  constructor(private store: Store<State>,
+  constructor(private products: ProductsFacadeService,
               private router: Router) { }
 
   ngOnInit() {
-    this.products$ = this.store.select(getProducts);
+    this.products$ = this.products.all$;
   }
 
   onAddNew(): void {
@@ -31,7 +29,7 @@ export class AdminProductsComponent implements OnInit {
 
   onDeleteItem(product: Product): void {
     if (confirm(`Are you sure to delete ${product.title}?`)) {
-      this.store.dispatch(deleteProduct(({product})));
+      this.products.deleteProduct(product);
     }
   }
 }

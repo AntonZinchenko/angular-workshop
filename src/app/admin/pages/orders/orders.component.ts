@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order } from 'src/app/core/models/order';
 import { Observable } from 'rxjs';
-import { deleteOrder } from 'src/app/+store/actions/orders.actions';
-import { getOrders, State } from 'src/app/+store/reducers';
-import { Store } from '@ngrx/store';
+import { OrdersFacadeService } from 'src/app/+store/facades/orders-facade.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -14,11 +12,11 @@ import { Store } from '@ngrx/store';
 export class AdminOrdersComponent implements OnInit {
   orders$: Observable<Order[]>;
 
-  constructor(private store: Store<State>,
+  constructor(private orders: OrdersFacadeService,
               private router: Router) { }
 
   ngOnInit() {
-    this.orders$ = this.store.select(getOrders);
+    this.orders$ = this.orders.orders$;
   }
 
   onEditItem(order: Order): void {
@@ -27,7 +25,7 @@ export class AdminOrdersComponent implements OnInit {
 
   onDeleteItem(order: Order): void {
     if (confirm(`Are you sure to delete order?`)) {
-      this.store.dispatch(deleteOrder(({order})));
+      this.orders.deleteOrder(order);
     }
   }
 }

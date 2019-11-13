@@ -30,6 +30,9 @@ import { ProductsPreloadGuard } from './guards/products-preload.guard';
 import { OrdersPreloadGuard } from './guards/orders-preload.guard';
 import { TimingInterceptor } from './core/interceptors/timing.interceptor';
 import { AppSettings } from './core/services/app-settings.service';
+import { CartFacadeService } from './+store/facades/cart-facade.service';
+import { ProductsFacadeService } from './+store/facades/products-facade.service';
+import { OrdersFacadeService } from './+store/facades/orders-facade.service';
 
 @NgModule({
   declarations: [
@@ -79,7 +82,10 @@ import { AppSettings } from './core/services/app-settings.service';
     AuthService,
     AuthGuard,
     ProductsPreloadGuard,
-    OrdersPreloadGuard
+    OrdersPreloadGuard,
+    CartFacadeService,
+    ProductsFacadeService,
+    OrdersFacadeService
   ],
   bootstrap: [AppComponent]
 })

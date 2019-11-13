@@ -1,11 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
-import { Store } from '@ngrx/store';
-import { State, getProductByUrl } from 'src/app/+store/reducers';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { addProduct, updateProduct } from 'src/app/+store/actions/products.actions';
+import { ProductsFacadeService } from 'src/app/+store/facades/products-facade.service';
 
 @Component({
   selector: 'app-admin-product-details',
@@ -16,14 +14,14 @@ export class AdminProductDetailsComponent implements OnInit, OnDestroy {
   product: Product;
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private store: Store<State>,
+  constructor(private products: ProductsFacadeService,
               private router: Router,
               private route: ActivatedRoute) {
     this.product = {} as Product;
   }
 
   ngOnInit() {
-    this.store.select(getProductByUrl)
+    this.products.getByUrl$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.product = Object.assign({}, response), err => console.log(err));
   }
@@ -39,9 +37,9 @@ export class AdminProductDetailsComponent implements OnInit, OnDestroy {
     }
 
     if (!model.id) {
-      this.store.dispatch(addProduct({product: model}));
+      this.products.addProduct(model);
     } else {
-      this.store.dispatch(updateProduct({product: model}));
+      this.products.updateProduct(model);
     }
   }
 
