@@ -44,15 +44,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   onOrder(address: ShippingInfo, products: Product[]) {
     this.orders.createOrder(new Order(products, address));
-    /*
-    this.ordersService.createOrder(new Order(products, address))
-      .pipe(take(1))
-      .subscribe(() => {
-        alert('Order created!');
-        this.store.dispatch(actions.clearCart);
-        this.onShowProducts();
-      }, err => console.log(err));
-      */
   }
 
   onIncrease(product: Product): void {
