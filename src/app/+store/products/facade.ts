@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { State, getProducts, getProductByUrl } from 'src/app/+store/reducers';
+import { State, getProducts, getProductByUrl } from 'src/app/+store';
 import { Product } from 'src/app/core/models/product';
-import { updateProduct, deleteProduct, addProduct } from '../actions/products.actions';
-import { go, back } from '../actions/router.actions';
+import { updateProduct, deleteProduct, addProduct } from './actions';
+import { go, back } from '../router/actions';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import * as actions from '../actions/router.actions';
+import * as actions from './actions';
 
 import { tap } from 'rxjs/operators';
 

@@ -4,10 +4,10 @@ import {
   MetaReducer,
   createFeatureSelector
 } from '@ngrx/store';
-import { environment } from '../../../environments/environment';
-import * as fromCart from './cart.reducer';
-import * as fromProducts from './products.reducer';
-import * as fromOrders from './orders.reducer';
+import { environment } from '../../environments/environment';
+import * as fromCart from './cart/reducer';
+import * as fromProducts from './products/reducer';
+import * as fromOrders from './orders/reducer';
 import { RouterReducerState, routerReducer } from '@ngrx/router-store';
 
 export interface State {

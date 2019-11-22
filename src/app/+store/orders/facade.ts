@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { getOrders, State, getOrderByUrl } from 'src/app/+store/reducers';
+import { getOrders, State, getOrderByUrl } from 'src/app/+store';
 import { Order } from 'src/app/core/models/order';
-import { deleteOrder, updateOrder, addOrder } from '../actions/orders.actions';
-import { go, back } from '../actions/router.actions';
+import { deleteOrder, updateOrder, addOrder } from './actions';
+import { go, back } from '../router/actions';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({

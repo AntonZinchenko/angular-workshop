@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { State, getCartProducts, getCartTotalSum, getCartTotalQuantity } from 'src/app/+store/reducers';
+import { State, getCartProducts, getCartTotalSum, getCartTotalQuantity } from 'src/app/+store';
 import { Product } from 'src/app/core/models/product';
-import { addProduct, increaseQuantity, decreaseQuantity, removeProduct } from '../actions/cart.actions';
+import { addProduct, increaseQuantity, decreaseQuantity, removeProduct } from './actions';
 
 @Injectable({
   providedIn: 'root'

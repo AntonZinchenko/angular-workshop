@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Order } from 'src/app/core/models/order';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { OrdersFacadeService } from 'src/app/+store/facades/orders-facade.service';
+import { OrdersFacadeService } from 'src/app/+store/orders/facade';
 
 @Component({
   selector: 'app-admin-order-details',

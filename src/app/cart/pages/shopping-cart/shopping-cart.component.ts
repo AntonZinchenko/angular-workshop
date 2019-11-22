@@ -3,10 +3,10 @@ import { Product } from 'src/app/core/models/product';
 import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CartFacadeService } from 'src/app/+store/facades/cart-facade.service';
-import { OrdersFacadeService } from 'src/app/+store/facades/orders-facade.service';
+import { CartFacadeService } from 'src/app/+store/cart/facade';
+import { OrdersFacadeService } from 'src/app/+store/orders/facade';
 import { Order } from 'src/app/core/models/order';
-import { ProductsFacadeService } from 'src/app/+store/facades/products-facade.service';
+import { ProductsFacadeService } from 'src/app/+store/products/facade';
 
 @Component({
   selector: 'app-shopping-cart',

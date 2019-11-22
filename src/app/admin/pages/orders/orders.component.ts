@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order } from 'src/app/core/models/order';
 import { Observable } from 'rxjs';
-import { OrdersFacadeService } from 'src/app/+store/facades/orders-facade.service';
+import { OrdersFacadeService } from 'src/app/+store/orders/facade';
 
 @Component({
   selector: 'app-admin-orders',

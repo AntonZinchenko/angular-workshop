@@ -3,9 +3,9 @@ import { CanActivate } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
-import { State, getOrders } from 'src/app/+store/reducers';
+import { State, getOrders } from 'src/app/+store';
 import { Observable, of } from 'rxjs';
-import { loadOrders } from '../+store/actions/orders.actions';
+import { loadOrders } from '../+store/orders/actions';
 import { Order } from '../core/models/order';
 import { tap, filter, take, map, switchMap, catchError } from 'rxjs/operators';
 

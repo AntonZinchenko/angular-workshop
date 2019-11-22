@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { map, mergeMap, catchError, tap, switchMap } from 'rxjs/operators';
-import * as actions from '../actions/orders.actions';
+import * as actions from './actions';
 import { OrdersService } from '../../core/services/orders.service';
-import { clearCart } from '../actions/cart.actions';
-import { go } from '../actions/router.actions';
+import { clearCart } from '../cart/actions';
+import { go } from '../router/actions';
 
 @Injectable()
 export class OrdersEffects {

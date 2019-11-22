@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from 'src/app/core/models/product';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ProductsFacadeService } from 'src/app/+store/facades/products-facade.service';
+import { ProductsFacadeService } from 'src/app/+store/products/facade';
 
 @Component({
   selector: 'app-admin-product-details',

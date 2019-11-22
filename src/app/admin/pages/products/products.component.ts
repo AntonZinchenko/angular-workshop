@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/core/models/product';
 import { Observable } from 'rxjs';
-import { ProductsFacadeService } from 'src/app/+store/facades/products-facade.service';
+import { ProductsFacadeService } from 'src/app/+store/products/facade';
 
 @Component({
   selector: 'app-admin-products',
