@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
-import { ProductsService } from 'src/app/products/services/products.service';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { ProductsFacadeService } from 'src/app/+store/products/facade';
 
 @Component({
   selector: 'app-admin-products',
@@ -13,25 +11,23 @@ import { switchMap } from 'rxjs/operators';
 export class AdminProductsComponent implements OnInit {
   products$: Observable<Product[]>;
 
-  constructor(private productsService: ProductsService,
-              private router: Router) { }
+  constructor(private productsFacade: ProductsFacadeService) { }
 
   ngOnInit() {
-    this.products$ = this.productsService.getProducts();
+    this.products$ = this.productsFacade.all$;
   }
 
   onAddNew(): void {
-    this.router.navigate(['admin/products/add']);
+    this.productsFacade.showFormProduct();
   }
 
   onEditItem(product: Product): void {
-    this.router.navigate(['admin/products/edit', product.id]);
+    this.productsFacade.showFormProduct(product.id);
   }
 
   onDeleteItem(product: Product): void {
     if (confirm(`Are you sure to delete ${product.title}?`)) {
-      this.products$ = this.productsService.deleteProduct(product)
-        .pipe(switchMap(() => this.productsService.getProducts()));
+      this.productsFacade.deleteProduct(product);
     }
   }
 }

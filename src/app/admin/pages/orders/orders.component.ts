@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Order } from 'src/app/core/models/order';
-import { OrdersService } from 'src/app/core/services/orders.service';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { OrdersFacadeService } from 'src/app/+store/orders/facade';
 
 @Component({
   selector: 'app-admin-orders',
@@ -13,21 +12,19 @@ import { switchMap } from 'rxjs/operators';
 export class AdminOrdersComponent implements OnInit {
   orders$: Observable<Order[]>;
 
-  constructor(private ordersService: OrdersService,
-              private router: Router) { }
+  constructor(private ordersFacade: OrdersFacadeService) { }
 
   ngOnInit() {
-    this.orders$ = this.ordersService.getOrders();
+    this.orders$ = this.ordersFacade.orders$;
   }
 
   onEditItem(order: Order): void {
-    this.router.navigate(['admin/order/edit', order.id]);
+    this.ordersFacade.showOrderForm(order.id);
   }
 
   onDeleteItem(order: Order): void {
     if (confirm(`Are you sure to delete order?`)) {
-      this.orders$ = this.ordersService.deleteOrder(order)
-        .pipe(switchMap(() => this.ordersService.getOrders()));
+      this.ordersFacade.deleteOrder(order);
     }
   }
 }

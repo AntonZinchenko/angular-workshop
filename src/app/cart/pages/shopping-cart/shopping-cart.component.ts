@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Product } from 'src/app/core/models/product';
 import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
 import { Observable, Subject } from 'rxjs';
-import { OrdersService } from 'src/app/core/services/orders.service';
+import { takeUntil } from 'rxjs/operators';
+import { CartFacadeService } from 'src/app/+store/cart/facade';
+import { OrdersFacadeService } from 'src/app/+store/orders/facade';
 import { Order } from 'src/app/core/models/order';
-import { take, takeUntil } from 'rxjs/operators';
+import { ProductsFacadeService } from 'src/app/+store/products/facade';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -24,19 +24,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private shoppingCartService: ShoppingCartService,
-              private ordersService: OrdersService,
-              private router: Router) {
+  constructor(private cartFacade: CartFacadeService,
+              private ordersFacade: OrdersFacadeService,
+              private productsFacade: ProductsFacadeService) {
   }
 
   ngOnInit() {
-    this.shoppingCartService.productsInCart$
+    this.cartFacade.selectedProducts$
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        response => this.products = response,
-        err => console.log(err));
-    this.totalSum$ = this.shoppingCartService.totalSum$;
-    this.totalQuantity$ = this.shoppingCartService.totalQuantity$;
+      .subscribe(response => this.products = response, err => console.log(err));
+    this.totalSum$ = this.cartFacade.totalSum$;
+    this.totalQuantity$ = this.cartFacade.totalQuantity$;
   }
 
   ngOnDestroy() {
@@ -45,29 +43,23 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   onOrder(address: ShippingInfo, products: Product[]) {
-    this.ordersService.createOrder(new Order(products, address))
-      .pipe(take(1))
-      .subscribe(() => {
-        alert('Order created!');
-        this.shoppingCartService.removeAllProducts();
-        this.onShowProducts();
-      }, err => console.log(err));
+    this.ordersFacade.createOrder(new Order(products, address));
   }
 
   onIncrease(product: Product): void {
-    this.shoppingCartService.increaseQuantity(product);
+    this.cartFacade.increaseQuantity(product);
   }
 
   onDecrease(product: Product): void {
-    this.shoppingCartService.decreaseQuantity(product);
+    this.cartFacade.decreaseQuantity(product);
   }
 
   onRemoveProduct(product: Product): void {
-    this.shoppingCartService.removeProduct(product);
+    this.cartFacade.removeProduct(product);
   }
 
   onShowProducts() {
-    this.router.navigate(['products-list']);
+    this.productsFacade.showProductsList();
   }
 
   onSwitchOrderArgs(newField: OrderType) {

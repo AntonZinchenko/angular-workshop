@@ -1,42 +1,42 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Order } from 'src/app/core/models/order';
-import { OrdersService } from 'src/app/core/services/orders.service';
-import { switchMap, tap, map, take } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { OrdersFacadeService } from 'src/app/+store/orders/facade';
 
 @Component({
   selector: 'app-admin-order-details',
   templateUrl: './order-details.component.html',
   styleUrls: ['./order-details.component.css']
 })
-export class AdminOrderDetailsComponent implements OnInit {
+export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
   order: Order;
+  private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private ordersService: OrdersService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(private ordersFacade: OrdersFacadeService) {
+    this.order = {} as Order;
   }
 
   ngOnInit() {
-    this.route.paramMap.pipe(
-      switchMap(params => this.ordersService.getOrder(+params.get('id'))))
-        .subscribe(response => this.order = response, err => console.log(err));
+    this.ordersFacade.getByUrl$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(response => this.order = Object.assign({}, response), err => console.log(err));
   }
 
-  onSave(order: Order): void {
-    const actionResult = (!order.id)
-      ? this.ordersService.createOrder(order)
-      : this.ordersService.updateOrder(order);
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
 
-    actionResult.pipe(take(1))
-      .subscribe(() => this.onGoBack(), err => console.log(err));
+  onSave(model: Order): void {
+    this.ordersFacade.updateOrder(model);
   }
 
   get totalPrice() {
-    return this.order.products.reduce((sum, current) => sum + current.price, 0);
+    return (this.order) ? this.order.products.reduce((sum, current) => sum + current.price, 0) : 0;
   }
 
   onGoBack(): void {
-    this.router.navigate(['../../../'], { relativeTo: this.route });
+    this.ordersFacade.cancelEditMode();
   }
 }

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ProductsService } from '../../services/products.service';
-import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
-import { switchMap } from 'rxjs/operators';
+import { CartFacadeService } from 'src/app/+store/cart/facade';
+import { ProductsFacadeService } from 'src/app/+store/products/facade';
 
 @Component({
   selector: 'app-product-details',
@@ -14,24 +12,21 @@ import { switchMap } from 'rxjs/operators';
 export class ProductDetailsComponent implements OnInit {
   product$: Observable<Product>;
 
-  constructor(private router: Router,
-              private shoppingCartService: ShoppingCartService,
-              private route: ActivatedRoute,
-              private productsService: ProductsService) {
+  constructor(private productsFacade: ProductsFacadeService,
+              private cart: CartFacadeService) {
   }
 
   ngOnInit() {
-    this.product$ = this.route.paramMap.pipe(
-      switchMap(params => this.productsService.getProduct(+params.get('id'))));
+    this.product$ = this.productsFacade.getByUrl$;
   }
 
   onBuy(product: Product): void {
     if (product) {
-      this.shoppingCartService.addProduct(product);
+      this.cart.addProduct(product);
     }
   }
 
   onShowProducts() {
-    this.router.navigate(['products-list']);
+    this.productsFacade.showProductsList();
   }
 }

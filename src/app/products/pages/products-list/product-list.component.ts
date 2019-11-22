@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
-import { ShoppingCartService } from 'src/app/core/services/shopping-cart.service';
-import { ProductsService } from '../../services/products.service';
+import { CartFacadeService } from 'src/app/+store/cart/facade';
+import { ProductsFacadeService } from 'src/app/+store/products/facade';
 
 @Component({
   selector: 'app-product-list',
@@ -12,19 +11,18 @@ import { ProductsService } from '../../services/products.service';
 export class ProductListComponent implements OnInit {
   products$: Observable<Product[]>;
 
-  constructor(private productsService: ProductsService,
-              private shoppingCartService: ShoppingCartService,
-              private router: Router) { }
+  constructor(private productsFacade: ProductsFacadeService,
+              private cartFacade: CartFacadeService) { }
 
   ngOnInit() {
-    this.products$ = this.productsService.getProducts();
+    this.products$ = this.productsFacade.all$;
   }
 
   onBuy(product: Product) {
-    this.shoppingCartService.addProduct(product);
+    this.cartFacade.addProduct(product);
   }
 
   onShowDetails(productId: number) {
-    this.router.navigate(['product', productId]);
+    this.productsFacade.showProductDetails(productId);
   }
 }

@@ -18,8 +18,23 @@ import { OrdersService } from './core/services/orders.service';
 import { AuthService } from './core/services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './pages/login/login.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './+store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { EffectsModule } from '@ngrx/effects';
+import { ProductsEffects } from './+store/products/effects';
+import { OrdersEffects } from './+store/orders/effects';
+import { ProductsPreloadGuard } from './guards/products-preload.guard';
+import { OrdersPreloadGuard } from './guards/orders-preload.guard';
 import { TimingInterceptor } from './core/interceptors/timing.interceptor';
 import { AppSettings } from './core/services/app-settings.service';
+import { CartFacadeService } from './+store/cart/facade';
+import { ProductsFacadeService } from './+store/products/facade';
+import { OrdersFacadeService } from './+store/orders/facade';
+import { RouterEffects } from './+store/router/effects';
+import { RouterStateSerializerProvider } from './+store/router/reducer';
 
 @NgModule({
   declarations: [
@@ -41,9 +56,24 @@ import { AppSettings } from './core/services/app-settings.service';
     }),
     AppRoutingModule,
     CartModule,
-    ProductsModule
+    ProductsModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    EffectsModule.forRoot([
+      ProductsEffects,
+      OrdersEffects,
+      RouterEffects
+    ]),
+    StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [
+  //  RouterStateSerializerProvider,
     LocalStorageService,
     AppSettings,
     {
@@ -54,7 +84,12 @@ import { AppSettings } from './core/services/app-settings.service';
     ShoppingCartService,
     OrdersService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    ProductsPreloadGuard,
+    OrdersPreloadGuard,
+    CartFacadeService,
+    ProductsFacadeService,
+    OrdersFacadeService
   ],
   bootstrap: [AppComponent]
 })
