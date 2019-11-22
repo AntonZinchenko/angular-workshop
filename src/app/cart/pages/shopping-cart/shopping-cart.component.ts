@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
 import { ShippingInfo, OrderType } from 'src/app/core/models/shipping-info';
 import { Observable, Subject } from 'rxjs';
@@ -7,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CartFacadeService } from 'src/app/+store/facades/cart-facade.service';
 import { OrdersFacadeService } from 'src/app/+store/facades/orders-facade.service';
 import { Order } from 'src/app/core/models/order';
+import { ProductsFacadeService } from 'src/app/+store/facades/products-facade.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -24,17 +24,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private cart: CartFacadeService,
-              private orders: OrdersFacadeService,
-              private router: Router) {
+  constructor(private cartFacade: CartFacadeService,
+              private ordersFacade: OrdersFacadeService,
+              private productsFacade: ProductsFacadeService) {
   }
 
   ngOnInit() {
-    this.cart.selectedProducts$
+    this.cartFacade.selectedProducts$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.products = response, err => console.log(err));
-    this.totalSum$ = this.cart.totalSum$;
-    this.totalQuantity$ = this.cart.totalQuantity$;
+    this.totalSum$ = this.cartFacade.totalSum$;
+    this.totalQuantity$ = this.cartFacade.totalQuantity$;
   }
 
   ngOnDestroy() {
@@ -43,23 +43,23 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   onOrder(address: ShippingInfo, products: Product[]) {
-    this.orders.createOrder(new Order(products, address));
+    this.ordersFacade.createOrder(new Order(products, address));
   }
 
   onIncrease(product: Product): void {
-    this.cart.increaseQuantity(product);
+    this.cartFacade.increaseQuantity(product);
   }
 
   onDecrease(product: Product): void {
-    this.cart.decreaseQuantity(product);
+    this.cartFacade.decreaseQuantity(product);
   }
 
   onRemoveProduct(product: Product): void {
-    this.cart.removeProduct(product);
+    this.cartFacade.removeProduct(product);
   }
 
   onShowProducts() {
-    this.router.navigate(['products-list']);
+    this.productsFacade.showProductsList();
   }
 
   onSwitchOrderArgs(newField: OrderType) {

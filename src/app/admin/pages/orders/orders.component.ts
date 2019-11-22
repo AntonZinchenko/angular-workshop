@@ -12,20 +12,19 @@ import { OrdersFacadeService } from 'src/app/+store/facades/orders-facade.servic
 export class AdminOrdersComponent implements OnInit {
   orders$: Observable<Order[]>;
 
-  constructor(private orders: OrdersFacadeService,
-              private router: Router) { }
+  constructor(private ordersFacade: OrdersFacadeService) { }
 
   ngOnInit() {
-    this.orders$ = this.orders.orders$;
+    this.orders$ = this.ordersFacade.orders$;
   }
 
   onEditItem(order: Order): void {
-    this.router.navigate(['admin/order/edit', order.id]);
+    this.ordersFacade.showOrderForm(order.id);
   }
 
   onDeleteItem(order: Order): void {
     if (confirm(`Are you sure to delete order?`)) {
-      this.orders.deleteOrder(order);
+      this.ordersFacade.deleteOrder(order);
     }
   }
 }

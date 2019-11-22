@@ -1,4 +1,3 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Order } from 'src/app/core/models/order';
 import { takeUntil } from 'rxjs/operators';
@@ -14,14 +13,12 @@ export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
   order: Order;
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private orders: OrdersFacadeService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(private ordersFacade: OrdersFacadeService) {
     this.order = {} as Order;
   }
 
   ngOnInit() {
-    this.orders.getByUrl$
+    this.ordersFacade.getByUrl$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.order = Object.assign({}, response), err => console.log(err));
   }
@@ -32,18 +29,14 @@ export class AdminOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSave(model: Order): void {
-    this.orders.updateOrder(model);
+    this.ordersFacade.updateOrder(model);
   }
 
   get totalPrice() {
-    if (!this.order) {
-      return 0;
-    }
-
-    return this.order.products.reduce((sum, current) => sum + current.price, 0);
+    return (this.order) ? this.order.products.reduce((sum, current) => sum + current.price, 0) : 0;
   }
 
   onGoBack(): void {
-    this.router.navigate(['../../../'], { relativeTo: this.route });
+    this.ordersFacade.cancelEditMode();
   }
 }

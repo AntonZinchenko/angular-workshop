@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/core/models/product';
 import { CartFacadeService } from 'src/app/+store/facades/cart-facade.service';
@@ -13,13 +12,12 @@ import { ProductsFacadeService } from 'src/app/+store/facades/products-facade.se
 export class ProductDetailsComponent implements OnInit {
   product$: Observable<Product>;
 
-  constructor(private router: Router,
-              private products: ProductsFacadeService,
+  constructor(private productsFacade: ProductsFacadeService,
               private cart: CartFacadeService) {
   }
 
   ngOnInit() {
-    this.product$ = this.products.getByUrl$;
+    this.product$ = this.productsFacade.getByUrl$;
   }
 
   onBuy(product: Product): void {
@@ -29,6 +27,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   onShowProducts() {
-    this.router.navigate(['products-list']);
+    this.productsFacade.showProductsList();
   }
 }

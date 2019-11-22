@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from 'src/app/core/models/product';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,14 +13,12 @@ export class AdminProductDetailsComponent implements OnInit, OnDestroy {
   product: Product;
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private products: ProductsFacadeService,
-              private router: Router,
-              private route: ActivatedRoute) {
+  constructor(private productsFacade: ProductsFacadeService) {
     this.product = {} as Product;
   }
 
   ngOnInit() {
-    this.products.getByUrl$
+    this.productsFacade.getByUrl$
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.product = Object.assign({}, response), err => console.log(err));
   }
@@ -37,13 +34,13 @@ export class AdminProductDetailsComponent implements OnInit, OnDestroy {
     }
 
     if (!model.id) {
-      this.products.addProduct(model);
+      this.productsFacade.addProduct(model);
     } else {
-      this.products.updateProduct(model);
+      this.productsFacade.updateProduct(model);
     }
   }
 
   onGoBack(): void {
-    this.router.navigate(['../../'], { relativeTo: this.route });
+    this.productsFacade.cancelEditMode();
   }
 }

@@ -4,55 +4,53 @@ import { of } from 'rxjs';
 import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import * as actions from '../actions/products.actions';
 import { ProductsService } from '../../products/services/products.service';
-import { Router } from '@angular/router';
+import { go } from '../actions/router.actions';
 
 @Injectable()
 export class ProductsEffects {
+  constructor(
+    private actions$: Actions,
+    private productsService: ProductsService
+  ) { }
+
   loadProducts$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadProducts),
     mergeMap(() => this.productsService.getProducts()
       .pipe(
-        map(products => actions.productsLoaded({products})),
-        catchError((error) => of(actions.productsLoadFailed({error})))
+        map(products => actions.productsLoaded({ products })),
+        catchError((error) => of(actions.productsLoadFailed({ error })))
       ))
-    ));
+  ));
 
   createProduct$ = createEffect(() => this.actions$.pipe(
     ofType(actions.addProduct),
     mergeMap(arg => this.productsService.createProduct(arg.product)
       .pipe(
-        map(product => actions.productAdded({product})),
-        catchError((error) => of(actions.productAddFailed({error})))
+        map(product => actions.productAdded({ product })),
+        catchError((error) => of(actions.productAddFailed({ error })))
       ))
-    ));
-
-  operationSuccess$ = createEffect(() => this.actions$.pipe(
-    ofType(actions.productAdded, actions.updateProduct),
-    tap(() => this.router.navigate(['admin/products']))),
-    { dispatch: false }
-  );
+  ));
 
   updateProduct$ = createEffect(() => this.actions$.pipe(
     ofType(actions.updateProduct),
     mergeMap(arg => this.productsService.updateProduct(arg.product)
       .pipe(
-        map(product => actions.productUpdated({product})),
-        catchError((error) => of(actions.productUpdateFailed({error})))
+        map(product => actions.productUpdated({ product })),
+        catchError((error) => of(actions.productUpdateFailed({ error })))
       ))
-    ));
+  ));
+
+  operationSuccess$ = createEffect(() => this.actions$.pipe(
+    ofType(actions.productAdded, actions.updateProduct),
+    map(() => go({ path: ['admin/products'] })))
+  );
 
   deleteProduct$ = createEffect(() => this.actions$.pipe(
     ofType(actions.deleteProduct),
     mergeMap(arg => this.productsService.deleteProduct(arg.product)
       .pipe(
-        map(() => actions.productDeleted({product: arg.product})),
-        catchError((error) => of(actions.productDeleteFailed({error})))
+        map(() => actions.productDeleted({ product: arg.product })),
+        catchError((error) => of(actions.productDeleteFailed({ error })))
       ))
-    ));
-
-  constructor(
-    private actions$: Actions,
-    private productsService: ProductsService,
-    private router: Router
-  ) {}
+  ));
 }
