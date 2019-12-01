@@ -1,0 +1,72 @@
+<form class="address-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="shipping-info">
+        <div class="form-group col-xs-12">
+            <h3>{{'cart.form.title' | translate}}</h3>
+        </div>
+        <div class="form-group col-xs-4">
+            <label class="control-label" for="firstName">{{'cart.form.firstName' | translate}}</label>
+            <div class="controls">
+                <input id="firstName" name="firstName" formControlName="firstName" type="text" class="form-control">
+                <app-validator-message [field]="form.get('firstName')"></app-validator-message>
+            </div>
+        </div>
+        <div class="form-group col-xs-4">
+            <label class="control-label" for="lastName">{{'cart.form.lastName' | translate}}</label>
+            <div class="controls">
+                <input id="lastName" name="lastName" formControlName="lastName" type="text" class="form-control">
+                <app-validator-message [field]="form.get('lastName')"></app-validator-message>
+            </div>
+        </div>
+        <div class="form-group col-xs-4">
+
+            <label class="control-label" for="lastName">{{'cart.form.email' | translate}}</label>
+            <div class="controls">
+                <input id="email" name="email" formControlName="email" appEmailValidator type="text" class="form-control">
+                <app-validator-message [field]="form.get('email')"></app-validator-message>
+            </div>
+        </div>
+        <div formArrayName="phones">
+            <div class="form-group col-xs-4">
+              <span>{{'cart.form.phones' | translate}}</span>
+              <button type="button" (click)="onAddPhone()" class="btn btn-link btn-xs">
+                <span class="glyphicon glyphicon-plus"> </span>
+              </button>
+            </div>
+            <div class="form-group col-xs-12" *ngFor="let phone of form.get['phones'].controls; let i = index">
+                <div class="form-group col-xs-6">
+                    <input class="form-control" formControlName="{{i}}" />
+                </div>
+                <div class="form-group col-xs-6">
+                  <button type="button" (click)="onRemovePhone()" class="btn btn-link btn-xs">
+                    <span class="glyphicon glyphicon-minus"> </span>
+                  </button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+          <input type="checkbox" formControlName="withDelivery">{{'cart.form.withDelivery' | translate}}
+        </div>
+        <div *ngIf="form.get('withDelivery').value" >
+          <div class="form-group col-xs-3">
+              <label class="control-label" for="shippingCity">{{'cart.form.city' | translate}}</label>
+              <div class="controls">
+                  <input id="shippingCity" name="shippingCity" formControlName="shippingCity" type="text" class="form-control">
+                  <app-validator-message [field]="form.get('shippingCity')"></app-validator-message>
+              </div>
+          </div>
+          <div class="form-group col-xs-9">
+              <label class="control-label" for="shippingAddress">{{'cart.form.address' | translate}}</label>
+              <div class="controls">
+                  <input id="shippingAddress" name="shippingAddress" formControlName="shippingAddress" type="text" class="form-control" />
+                  <app-validator-message [field]="form.get('shippingAddress')"></app-validator-message>
+              </div>
+          </div>
+        </div>
+        <div class="form-group col-xs-9"></div>
+        <div class="form-group col-xs-3">
+            <button type="submit" [disabled]="!form.valid" class="btn btn-success btn-block">
+                {{'cart.form.order' | translate}}
+            </button>
+        </div>
+    </div>
+</form>

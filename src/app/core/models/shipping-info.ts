@@ -1,6 +1,8 @@
 export class ShippingInfo {
     public firstName: string;
     public lastName: string;
+    public email: string;
+    public phones: string[];
     public shippingCity: string;
     public shippingAddress: string;
 
