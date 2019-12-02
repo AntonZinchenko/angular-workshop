@@ -1,0 +1,5 @@
+<div *ngIf="field.invalid && field.touched && validatorMessages?.length">
+  <small *ngFor="let errMsg of validatorMessages" class="text-danger">
+    {{errMsg}}
+  </small>
+</div>

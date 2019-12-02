@@ -31,9 +31,9 @@
               (decrease)="onDecrease($event)"
               (remove)="onRemoveProduct($event)"></app-cart-list>
             <hr />
-            <app-address-form
+            <app-process-order
               [address]="shippingInfo"
-              (order)="onOrder($event, products)"></app-address-form>
+              (order)="onOrder($event, products)"></app-process-order>
           </div>
           <ng-template #noRows>
             <h3>{{ "cart.empty" | translate }}</h3>

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { shoppingCartRouterComponents, ShoppingCartRoutingModule } from './shopping-cart.routing.module';
-import { CartListComponent, AddressFormComponent, CartListItemComponent, CartListFooterComponent } from './components';
+import { CartListComponent, ProcessOrderComponent, CartListItemComponent, CartListFooterComponent } from './components';
 import { SharedModule } from '../shared/shared.module';
+import { EmailValidatorDirective } from './components/process-order/validators/email-validation.directive';
+import { ValidatorMessageComponent } from './components/validator-message/validator-message.component';
 
 @NgModule({
   imports: [
@@ -11,8 +13,10 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     shoppingCartRouterComponents,
     CartListComponent,
+    EmailValidatorDirective,
     CartListItemComponent,
-    AddressFormComponent,
+    ValidatorMessageComponent,
+    ProcessOrderComponent,
     CartListFooterComponent
   ]
 })

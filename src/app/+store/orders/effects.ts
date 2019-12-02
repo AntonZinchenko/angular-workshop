@@ -31,17 +31,11 @@ export class OrdersEffects {
           actions.orderAdded({ order }),
           clearCart
         ]),
+        tap(_ => alert('Order created!')),
+        map(url => go({ path: ['products-list'] })),
         catchError((error) => of(actions.orderAddFailed({ error })))
       ))
   ));
-
-  orderCreated$ = createEffect(() => this.actions$.pipe(
-    ofType(actions.orderAdded),
-    map(() => {
-      alert('Order created!');
-      return go({ path: ['products-list'] });
-    }))
-  );
 
   updateOrder$ = createEffect(() => this.actions$.pipe(
     ofType(actions.updateOrder),
