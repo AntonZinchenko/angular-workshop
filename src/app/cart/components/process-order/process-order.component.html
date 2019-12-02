@@ -32,7 +32,7 @@
                 <span class="glyphicon glyphicon-plus"> </span>
               </button>
             </div>
-            <div class="form-group col-xs-12" *ngFor="let phone of form.get['phones'].controls; let i = index">
+            <div class="form-group col-xs-12" *ngFor="let phone of form.controls['phones'].controls; let i = index">
                 <div class="form-group col-xs-6">
                     <input class="form-control" formControlName="{{i}}" />
                 </div>
