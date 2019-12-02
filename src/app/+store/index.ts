@@ -26,6 +26,7 @@ export const reducers: ActionReducerMap<State> = {
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
 
+// Почему бы это не перенести в папку router/router.selectors.ts?
 export const selectRouterState = createFeatureSelector<RouterReducerState>('router');
 export const selectRouteParameters = createSelector(selectRouterState,
   router => {
@@ -36,7 +37,7 @@ export const selectRouteParameters = createSelector(selectRouterState,
     return routeLevel.params;
   }
 );
-
+// или отдельные файлы для селекторов чем-то неудобны?
 export const getCartState = createFeatureSelector<fromCart.CartState>('cart');
 export const getCartProducts = createSelector(getCartState, fromCart.selectAll);
 export const getCartTotalQuantity = createSelector(getCartState, fromCart.selectTotal);

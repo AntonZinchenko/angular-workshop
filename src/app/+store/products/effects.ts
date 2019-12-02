@@ -15,6 +15,7 @@ export class ProductsEffects {
 
   loadProducts$ = createEffect(() => this.actions$.pipe(
     ofType(actions.loadProducts),
+    // Я бы тут использовал switchMap
     mergeMap(() => this.productsService.getProducts()
       .pipe(
         map(products => actions.productsLoaded({ products })),

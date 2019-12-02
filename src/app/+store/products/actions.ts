@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Product } from '../../core/models/product';
 
+// Очень лаконично и не понятно выглядит источник [Products]
 export const loadProducts = createAction('[Products] Load products');
 export const productsLoaded = createAction('[Products] Products loaded', props<{products: Product[]}>());
 export const productsLoadFailed = createAction('[Products] Products load failed', props<{error: string}>());
