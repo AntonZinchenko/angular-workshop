@@ -12,13 +12,20 @@ import { ActivatedRoute } from '@angular/router';
   providedIn: 'root'
 })
 export class ProductsFacadeService {
-  all$: Observable<Product[]>;
-  getByUrl$: Observable<Product>;
+  private all$: Observable<Product[]>;
+  private getByUrl$: Observable<Product>;
 
-  constructor(private store: Store<State>,
-              private route: ActivatedRoute) {
+  constructor(private store: Store<State>) {
     this.all$ = this.store.select(getProducts);
     this.getByUrl$ = this.store.select(getProductByUrl);
+  }
+
+  getAllProducts(): Observable<Product[]> {
+    return this.all$;
+  }
+
+  getProductByUrl(): Observable<Product> {
+    return this.getByUrl$;
   }
 
   addProduct(product: Product) {

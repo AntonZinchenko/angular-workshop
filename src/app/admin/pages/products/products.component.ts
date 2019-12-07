@@ -14,7 +14,7 @@ export class AdminProductsComponent implements OnInit {
   constructor(private productsFacade: ProductsFacadeService) { }
 
   ngOnInit() {
-    this.products$ = this.productsFacade.all$;
+    this.products$ = this.productsFacade.getAllProducts();
   }
 
   onAddNew(): void {

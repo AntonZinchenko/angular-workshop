@@ -17,7 +17,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.product$ = this.productsFacade.getByUrl$;
+    this.product$ = this.productsFacade.getProductByUrl();
   }
 
   onBuy(product: Product): void {
