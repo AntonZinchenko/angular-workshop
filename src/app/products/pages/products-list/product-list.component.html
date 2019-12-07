@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" *ngIf="products$ | async as products">
   <div class="row">
     <app-product
-      *ngFor="let product of products$ | async"
+      *ngFor="let product of products"
       [product]="product"
       (buy)="onBuy($event)"
       (details)="onShowDetails($event)">

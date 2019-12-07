@@ -18,7 +18,7 @@ export class AdminProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.productsFacade.getByUrl$
+    this.productsFacade.getProductByUrl()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(response => this.product = Object.assign({}, response), err => console.log(err));
   }

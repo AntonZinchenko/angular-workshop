@@ -15,7 +15,7 @@ export class ProductListComponent implements OnInit {
               private cartFacade: CartFacadeService) { }
 
   ngOnInit() {
-    this.products$ = this.productsFacade.all$;
+    this.products$ = this.productsFacade.getAllProducts();
   }
 
   onBuy(product: Product) {
